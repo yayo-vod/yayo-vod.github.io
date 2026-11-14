@@ -81,7 +81,10 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 
 /* tiers + rows */
 .tier{margin-top:clamp(2.5rem,7vw,4.5rem)}
-.band{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:1rem 1.4rem;flex-wrap:wrap;padding:.8rem 0;background:rgba(10,13,8,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid var(--bone);border-bottom:1px solid var(--faint);padding-top:max(.8rem,env(safe-area-inset-top,0px))}
+.band{position:sticky;top:var(--bar,0px);z-index:4;display:flex;align-items:center;gap:1rem 1.4rem;flex-wrap:wrap;padding:.8rem 0;background:rgba(10,13,8,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid var(--bone);border-bottom:1px solid var(--faint)}
+html:not(.barOn) .band{padding-top:max(.8rem,env(safe-area-inset-top,0px))}
+html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
+#list{scroll-margin-top:1rem}
 .band .gl{font:400 clamp(2.4rem,7vw,3.6rem)/1 var(--stencil);color:var(--poppy)}
 .band .nm{font:800 clamp(1.3rem,3.6vw,2rem)/1 var(--cond);text-transform:uppercase;letter-spacing:.07em}
 .band .bl{font:400 .95rem/1.3 var(--body);color:var(--dim);flex:1 1 14rem}
@@ -113,6 +116,39 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 .stubr .pips i{display:block;width:.5rem;height:.3rem;background:rgba(10,13,8,.25)}
 .stubr .pips i.on{background:var(--ink)}
 .row.dim .stubr{background:#8d9079}
+
+/* quick-switch bar, appears once the big grade ladder scrolls away */
+.minibar{position:fixed;top:0;left:0;right:0;z-index:20;transform:translateY(-110%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;background:rgba(10,13,8,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:2px solid var(--bone);padding-top:env(safe-area-inset-top,0px)}
+.minibar.on{transform:none;visibility:visible;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.mb-in{max-width:74rem;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem max(18px,env(safe-area-inset-right,0px)) .5rem max(18px,env(safe-area-inset-left,0px))}
+.mb-btns{display:flex;gap:.4rem}
+.mb-btns button{all:unset;box-sizing:border-box;cursor:pointer;min-width:2.6rem;height:2.4rem;padding:0 .6rem;display:grid;place-items:center;border:1.5px solid var(--bone);font:400 1.25rem/1 var(--stencil);color:var(--bone)}
+.mb-btns button.all{font:600 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.mb-btns button:hover{background:rgba(236,233,219,.1)}
+.mb-btns button[aria-pressed="true"]{background:var(--bone);color:var(--ink)}
+.mb-btns button:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.mb-label{font:600 .72rem/1.2 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-align:right}
+@media (max-width:40rem){.mb-label{display:none}}
+
+/* grade slam: a rubber stamp hits the screen when you pick a grade */
+#slam{position:fixed;inset:0;z-index:50;display:grid;place-items:center;pointer-events:none;visibility:hidden}
+#slam.go{visibility:visible;animation:slamWrap 1.15s linear both}
+#slam::before{content:"";position:absolute;inset:0;background:radial-gradient(closest-side,rgba(232,64,47,.34),rgba(10,13,8,.5) 80%);animation:flash 1.15s ease-out both}
+#slam .box{position:relative;display:grid;justify-items:center;gap:1.2rem;transform:rotate(-8deg);animation:slamBox 1.15s both}
+#slam b{font:400 clamp(9rem,46vw,24rem)/.85 var(--stencil);color:var(--poppy);border:clamp(8px,2vw,18px) solid var(--poppy);outline:2px solid var(--poppy);outline-offset:clamp(8px,1.6vw,14px);padding:.05em .17em .02em;background:rgba(10,13,8,.6);text-shadow:0 .03em 0 rgba(0,0,0,.4)}
+#slam span{font:600 clamp(.85rem,2.8vw,1.4rem)/1.2 var(--mono);letter-spacing:.42em;text-transform:uppercase;color:var(--bone);text-align:center;padding-left:.42em}
+@keyframes slamWrap{0%,62%{opacity:1}100%{opacity:0}}
+@keyframes flash{0%{opacity:0}10%{opacity:1}55%{opacity:.5}100%{opacity:0}}
+@keyframes slamBox{0%{transform:rotate(-8deg) scale(3);opacity:0}13%{transform:rotate(-8deg) scale(.93);opacity:1}18%{transform:rotate(-9.5deg) scale(1.04)}23%{transform:rotate(-7.5deg) scale(.99)}28%,100%{transform:rotate(-8deg) scale(1)}}
+
+/* tickets get dealt in after a pick */
+@media (prefers-reduced-motion:no-preference){
+  #list.deal .row{animation:deal .7s cubic-bezier(.2,.9,.25,1) calc(.35s + var(--i,0) * 85ms) backwards}
+  #list.deal .band{animation:bandIn .6s cubic-bezier(.2,.9,.25,1) .2s backwards}
+  @keyframes deal{from{opacity:0;transform:translateX(-46px) rotate(-2.2deg) scale(.96)}to{opacity:1;transform:none}}
+  @keyframes bandIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){#slam{display:none}}
 @media (max-width:34rem){.code{display:none}.row{--cut:.62rem}}
 .empty{padding:3rem 0;font:500 .9rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
@@ -134,6 +170,8 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 </head>
 <body>
 <div class="fx" aria-hidden="true"><div class="beam"></div><div class="beam b2"></div><div class="grain"></div><div class="vig"></div></div>
+<div class="minibar" id="minibar" role="group" aria-label="Quick grade filter"><div class="mb-in"><div class="mb-btns" id="mbBtns"></div><span class="mb-label" id="mbLabel"></span></div></div>
+<div id="slam" aria-hidden="true"><div class="box"><b id="slamL">A</b><span id="slamT"></span></div></div>
 <div class="page">
   <nav class="top" aria-label="Site"><a href="../">&larr; Yayo VOD Suggestions</a><span>List 01</span></nav>
   <header class="hero">
@@ -174,27 +212,57 @@ const FILMS=[
 ].map(([t,y,e,k],i)=>({t,y,e,k,r:i+1}));
 const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let tier='all';
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function pick(val){
+  tier=(tier===val&&val!=='all')?'all':val;
+  ladder();bar();render(true);
+  if(tier!=='all')slam(TIERS[tier]);
+  const l=$('list'),y=l.getBoundingClientRect().top+scrollY-(document.documentElement.classList.contains('barOn')?0:0);
+  if(scrollY>0||l.getBoundingClientRect().top>innerHeight*.5)window.scrollTo({top:Math.max(0,y-16-(innerWidth<700?56:60)),behavior:REDUCED?'auto':'smooth'});
+}
 function ladder(){
   const el=$('ladder'); el.innerHTML='';
-  const mk=(cls,l,n,c,val)=>{const b=document.createElement('button');b.type='button';b.className='rung '+cls;b.setAttribute('aria-pressed',String(tier===val));b.dataset.v=val;
+  const mk=(cls,l,n,c,val)=>{const b=document.createElement('button');b.type='button';b.className='rung '+cls;b.setAttribute('aria-pressed',String(tier===val));
     b.innerHTML=`<span class="l">${l}</span><span class="n">${esc(n)}</span><span class="c">${c} ${c===1?'film':'films'}</span>`;
-    b.onclick=()=>{tier=(tier===val&&val!=='all')?'all':val;ladder();render()};el.append(b)};
+    b.onclick=()=>pick(val);el.append(b)};
   mk('all','All','Every grade',FILMS.length,'all');
   TIERS.forEach((t,i)=>mk('',t.g,t.name,FILMS.filter(f=>f.k===i).length,i));
 }
-function render(){
-  let html='';
+function bar(){
+  const w=$('mbBtns'); w.innerHTML='';
+  const mk=(label,val,cls)=>{const b=document.createElement('button');b.type='button';b.className=cls||'';b.textContent=label;b.setAttribute('aria-pressed',String(tier===val));
+    b.setAttribute('aria-label',val==='all'?'Show all grades':'Grade '+label);b.onclick=()=>pick(val);w.append(b)};
+  mk('All','all','all');TIERS.forEach((t,i)=>mk(t.g,i));
+  const n=tier==='all'?FILMS.length:FILMS.filter(f=>f.k===tier).length;
+  $('mbLabel').textContent=tier==='all'?`All grades · ${n} films`:`Grade ${TIERS[tier].g} · ${TIERS[tier].name} · ${n} ${n===1?'film':'films'}`;
+}
+function slam(t){
+  if(REDUCED)return;
+  const el=$('slam');$('slamL').textContent=t.g;$('slamT').textContent='Grade '+t.g+' · '+t.name;
+  el.classList.remove('go');void el.offsetWidth;el.classList.add('go');
+  clearTimeout(slam.t);slam.t=setTimeout(()=>el.classList.remove('go'),1250);
+}
+function render(deal){
+  const list=$('list');
+  list.classList.toggle('deal',!!deal&&!REDUCED);
+  let html='',n=0;
   TIERS.forEach((t,ti)=>{
     if(tier!=='all'&&tier!==ti)return;
     const rows=FILMS.filter(f=>f.k===ti); if(!rows.length)return;
     const dim=ti>=3?' dim':'';
     const pips=Array.from({length:5},(_,k)=>`<i class="${k<t.fill?'on':''}"></i>`).join('');
     html+=`<section class="tier" aria-labelledby="h${ti}"><h2 class="band" id="h${ti}"><span class="gl" aria-hidden="true">${t.g}</span><span class="nm">Grade ${t.g}: ${esc(t.name)}</span><span class="bl">${esc(t.blurb)}</span><span class="ct">${rows.length} ${rows.length===1?'film':'films'}</span></h2><ol>`+
-    rows.map(f=>`<li class="row${dim}"><div class="stubl"><small>No.</small><span class="rk" aria-label="Rank ${f.r}">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><h3>${esc(f.t)}</h3><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p><i class="code" aria-hidden="true"></i></div><div class="stubr" role="img" aria-label="Grade ${t.g}, ${esc(t.name)}"><small>Grade</small><b>${t.g}</b><span class="pips">${pips}</span></div></li>`).join('')+`</ol></section>`;
+    rows.map(f=>`<li class="row${dim}" style="--i:${n++}"><div class="stubl"><small>No.</small><span class="rk" aria-label="Rank ${f.r}">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><h3>${esc(f.t)}</h3><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p><i class="code" aria-hidden="true"></i></div><div class="stubr" role="img" aria-label="Grade ${t.g}, ${esc(t.name)}"><small>Grade</small><b>${t.g}</b><span class="pips">${pips}</span></div></li>`).join('')+`</ol></section>`;
   });
-  $('list').innerHTML=html||'<p class="empty">Nothing here. Pick another grade.</p>';
+  list.innerHTML=html||'<p class="empty">Nothing here. Pick another grade.</p>';
+  clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2600);
 }
-ladder();render();
+(function(){const lad=$('ladder'),mb=$('minibar');
+  if(!('IntersectionObserver'in window))return;
+  new IntersectionObserver(([e])=>{const on=!e.isIntersecting&&e.boundingClientRect.top<0;mb.classList.toggle('on',on);document.documentElement.classList.toggle('barOn',on)}).observe(lad);
+})();
+ladder();bar();render(false);
+
 
 (function(){
   const el=document.getElementById('tg'); if(!el) return;

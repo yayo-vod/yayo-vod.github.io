@@ -33,7 +33,8 @@ h1,h2,h3,p,ul{margin:0;padding:0}ul{list-style:none}a{color:inherit}
 .eyebrow{font:600 clamp(.7rem,2vw,.85rem)/1 var(--mono);letter-spacing:.42em;text-transform:uppercase;color:var(--brass)}
 h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;color:var(--cream);text-shadow:0 0 18px rgba(255,214,140,.55),0 0 60px rgba(231,184,90,.35);letter-spacing:.01em}
 .sub{font:500 clamp(.72rem,2.2vw,.95rem)/1.2 var(--mono);letter-spacing:.5em;text-transform:uppercase;color:var(--dim);padding-left:.5em}
-.promise{max-width:34rem;margin:2rem auto 0;color:var(--dim);font-size:1.05rem}
+.promise{max-width:42rem;margin:2rem auto 0;color:var(--dim);font-size:1.05rem}
+.promise span{display:block}
 
 .now{display:flex;align-items:center;gap:1.2rem;margin:clamp(3rem,8vw,5rem) 0 1.6rem;font:600 .8rem/1 var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--brass)}
 .now::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--brass),transparent)}
@@ -42,12 +43,19 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
 /* lists are one-sheet posters: portrait, one big genre word, dressed in that list's own palette. (Single films get tickets inside each list.) */
 .poster{position:relative;display:grid;grid-template-rows:auto 1fr auto;aspect-ratio:3/4;min-height:26rem;padding:1.4rem 1.4rem 1.5rem;text-decoration:none;color:var(--p-ink);background:var(--p-bg);overflow:hidden;isolation:isolate;container-type:inline-size;filter:drop-shadow(0 22px 30px rgba(0,0,0,.6));transition:transform .45s cubic-bezier(.2,.8,.2,1)}
 .poster::before{content:"";position:absolute;inset:.7rem;border:1.5px solid var(--p-line);z-index:2;pointer-events:none}
-.poster::after{content:"";position:absolute;inset:0;z-index:0;background:conic-gradient(from 0deg at 0% 100%,transparent 0 48deg,rgba(255,240,190,.05) 54deg,rgba(255,240,190,.16) 60deg,rgba(255,240,190,.05) 66deg,transparent 72deg 360deg);transform-origin:0 100%;transform:rotate(-10deg);transition:transform 1.2s cubic-bezier(.2,.8,.2,1);pointer-events:none}
-.poster:hover{transform:translateY(-8px)}
-.poster:hover::after{transform:rotate(8deg)}
+.poster{--rx:0;--ry:0;--mx:28%;--my:22%;transform:perspective(1000px) rotateX(calc(var(--ry)*1deg)) rotateY(calc(var(--rx)*1deg)) translateY(var(--lift,0px))}
+.poster.live{transition:transform .09s linear}
+.poster:hover,.poster:focus-visible{--lift:-8px}
+.poster>.spot,.poster>.glint,.poster>.grainp{position:absolute;inset:0;pointer-events:none;z-index:0}
+.spot{background:radial-gradient(circle 15rem at var(--mx) var(--my),rgba(255,236,176,.26),rgba(255,236,176,.07) 45%,transparent 72%);opacity:.38;transition:opacity .45s}
+.poster:hover .spot,.poster:focus-visible .spot{opacity:1}
+.glint{overflow:hidden}
+.glint::before{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.16) 45%,rgba(255,255,255,.04) 55%,transparent);transform:skewX(-14deg) translateX(0);opacity:0}
+.poster:hover .glint::before{opacity:1;animation:glint 1.1s cubic-bezier(.3,.6,.2,1) both}
+@keyframes glint{from{transform:skewX(-14deg) translateX(0)}to{transform:skewX(-14deg) translateX(520%)}}
 .poster>*{position:relative;z-index:1}
 .p-top{display:flex;justify-content:space-between;gap:1rem;font:600 .68rem/1 var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--p-accent-text);padding:.5rem .6rem 0}
-.p-word{align-self:center;font:400 39cqw/.8 var(--p-display);text-transform:uppercase;letter-spacing:-.015em;white-space:nowrap;padding-inline:.4rem;color:var(--p-ink);text-shadow:0 .04em 0 rgba(0,0,0,.35)}
+.p-word{align-self:center;transform:translate(calc(var(--rx)*-1.4px),calc(var(--ry)*-1.4px));transition:transform .2s ease-out;font:400 39cqw/.8 var(--p-display);text-transform:uppercase;letter-spacing:-.015em;white-space:nowrap;padding-inline:.4rem;color:var(--p-ink);text-shadow:0 .04em 0 rgba(0,0,0,.35)}
 .p-word i{font-style:normal;color:var(--p-accent)}
 .p-bottom{display:grid;gap:.55rem;padding:0 .6rem .4rem}
 .p-bottom h2{font:800 1.6rem/1 var(--p-cond);text-transform:uppercase;letter-spacing:.04em}
@@ -70,7 +78,7 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
   .now{animation-delay:.25s}.tickets{animation-delay:.4s}.foot{animation-delay:.55s}
   @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 }
-@media (prefers-reduced-motion:reduce){.grain{animation:none}}
+@media (prefers-reduced-motion:reduce){.grain{animation:none}.glint{display:none}.poster{transform:none!important}}
 </style>
 </head>
 <body>
@@ -82,13 +90,13 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
     <p class="eyebrow">Your next watch</p>
     <h1>Yayo VOD</h1>
     <p class="sub">Suggestions</p>
-    <p class="promise">Hand-picked movie lists, one look per genre. Names only. No plots, no spoilers.</p>
+    <p class="promise"><span>Hand-picked movie lists, one look per genre. Names only.</span><span>No plots, no spoilers.</span></p>
   </header>
 
   <h2 class="now">The lists</h2>
   <ul class="tickets">
     <li><a class="poster war" href="war/">
-      <i class="grainp" aria-hidden="true"></i>
+      <i class="grainp" aria-hidden="true"></i><i class="spot" aria-hidden="true"></i><i class="glint" aria-hidden="true"></i>
       <div class="p-top"><span>List 01</span><span>21 films</span></div>
       <div class="p-word" aria-hidden="true">War<i>.</i></div>
       <div class="p-bottom">
@@ -100,5 +108,20 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
 
   <p class="foot">Every list is a poster with its own look. Inside, each film is a ticket. Open one and pick your night.</p>
 </div>
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.querySelectorAll('.poster').forEach(p=>{
+    p.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')p.classList.add('live')});
+    p.addEventListener('pointermove',e=>{
+      if(e.pointerType!=='mouse')return;
+      const r=p.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      p.style.setProperty('--mx',(x*100).toFixed(1)+'%');p.style.setProperty('--my',(y*100).toFixed(1)+'%');
+      p.style.setProperty('--rx',((x-.5)*12).toFixed(2));p.style.setProperty('--ry',((.5-y)*12).toFixed(2));
+    });
+    p.addEventListener('pointerleave',()=>{p.classList.remove('live');['--rx','--ry'].forEach(k=>p.style.setProperty(k,'0'));p.style.setProperty('--mx','28%');p.style.setProperty('--my','22%')});
+  });
+})();
+</script>
 </body>
 </html>
