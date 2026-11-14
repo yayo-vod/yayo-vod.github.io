@@ -29,7 +29,7 @@ var F=d.fonts;if(F&&F.load){Promise.all(["400 1em \"Saira Stencil One\"","800 1e
 }
 *{box-sizing:border-box}
 html{background:var(--ink);scroll-behavior:smooth;overflow-x:clip}
-body{margin:0;background:var(--ink);color:var(--bone);font:400 1rem/1.5 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+body{margin:0;background:var(--ink);color:var(--bone);font:400 1rem/1.5 var(--body);-webkit-font-smoothing:antialiased;min-height:100vh}
 h1,h2,h3,p,ol,ul{margin:0;padding:0}
 ol,ul{list-style:none}
 a{color:inherit}
@@ -92,6 +92,11 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 /* tiers + rows */
 .tier{margin-top:clamp(2.5rem,7vw,4.5rem)}
 .band{position:sticky;top:var(--bar,0px);z-index:4;display:flex;align-items:center;gap:1rem 1.4rem;flex-wrap:wrap;padding:.8rem 0;background:rgba(10,13,8,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid var(--bone);border-bottom:1px solid var(--faint)}
+.band::before{content:"";position:absolute;z-index:-1;top:-10px;bottom:0;left:50%;width:100vw;transform:translateX(-50%) translateY(-6px);opacity:0;pointer-events:none;
+  background:rgba(10,13,8,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid var(--bone);border-bottom:1px solid var(--faint);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.2,.8,.2,1)}
+.band.stuck{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-color:transparent}
+.band.stuck::before{opacity:1;transform:translateX(-50%) translateY(0)}
 html:not(.barOn) .band{padding-top:max(.8rem,env(safe-area-inset-top,0px))}
 html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 #list{scroll-margin-top:1rem}
@@ -187,7 +192,7 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   @keyframes deal{from{opacity:0;transform:translateX(-46px) rotate(-2.2deg) scale(.96)}to{opacity:1;transform:none}}
   @keyframes bandIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
 }
-@media (prefers-reduced-motion:reduce){#slam{display:none}}
+@media (prefers-reduced-motion:reduce){#slam{display:none}.band::before{transition:none}}
 
 @media (prefers-reduced-motion:no-preference){
   .row.tearing .stubl{animation:tearStub .8s cubic-bezier(.3,1.2,.4,1) both}
@@ -305,6 +310,9 @@ function tearAll(){document.querySelectorAll('.row:not(.torn)').forEach((li,i)=>
 document.addEventListener('click',e=>{const tk=e.target.closest&&e.target.closest('.ticket');if(tk)tear(tk.parentElement,true)});
 document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('ticket')){e.preventDefault();tear(e.target.parentElement,true)}});
 $('tearAll').onclick=tearAll;$('sealAll').onclick=sealAll;
+function stuckBands(){document.querySelectorAll('.band').forEach(b=>{const top=parseFloat(getComputedStyle(b).top)||0,r=b.getBoundingClientRect(),sb=b.parentElement.getBoundingClientRect().bottom;b.classList.toggle('stuck',r.top<=top+1&&scrollY>2&&sb>r.height+top+4)})}
+addEventListener('scroll',()=>{if(stuckBands.f)return;stuckBands.f=requestAnimationFrame(()=>{stuckBands.f=0;stuckBands()})},{passive:true});
+addEventListener('resize',stuckBands);
 function pick(val){
   tier=(tier===val&&val!=='all')?'all':val;
   ladder();bar();render(true);
@@ -347,7 +355,7 @@ function render(deal){
     rows.map(f=>{const torn=TORN.has(f.r);return `<li class="row${dim}${torn?' torn':''}" style="--i:${n++}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${ticketLabel(f,t,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="redact" aria-hidden="true">Tear to reveal</span></div><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Admitted</span></div><div class="stubr" aria-hidden="true"><small>Grade</small><b>${t.g}</b><span class="pips">${pips}</span></div></div></li>`}).join('')+`</ol></section>`;
   });
   list.innerHTML=html||'<p class="empty">Nothing here. Pick another grade.</p>';
-  clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2600);
+  requestAnimationFrame(stuckBands);clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2600);
 }
 (function(){const lad=$('ladder'),mb=$('minibar');
   if(!('IntersectionObserver'in window))return;

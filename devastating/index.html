@@ -96,6 +96,11 @@ h1 .l2{font:400 clamp(3.5rem,15.6vw,13.5rem)/.88 var(--serif);letter-spacing:-.0
 /* bands */
 .tier{margin-top:clamp(2.4rem,7vw,4.4rem)}
 .band{position:sticky;top:var(--bar,0px);z-index:4;display:flex;align-items:center;flex-wrap:wrap;gap:.6rem 1.4rem;padding:.9rem 0;background:linear-gradient(180deg,rgba(7,12,20,.92) 70%,rgba(7,12,20,0));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.band::before{content:"";position:absolute;z-index:-1;top:-10px;bottom:-10px;left:50%;width:100vw;transform:translateX(-50%) translateY(-8px);opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(7,12,20,.94) calc(100% - 12px),rgba(7,12,20,0));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 rgba(220,230,242,.1);transition:opacity .35s ease,transform .35s cubic-bezier(.2,.8,.2,1)}
+.band.stuck{background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.band.stuck::before{opacity:1;transform:translateX(-50%) translateY(0)}
 html:not(.barOn) .band{padding-top:max(.9rem,env(safe-area-inset-top,0px))}
 html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 .band .ic{width:2.1rem;height:2.1rem}
@@ -211,7 +216,7 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   @keyframes usedIn{from{opacity:0;transform:rotate(-6deg) scale(1.9)}to{opacity:.95;transform:rotate(-6deg) scale(1)}}
   @keyframes codeOut{from{opacity:.3;clip-path:inset(0 0 0 0)}to{opacity:0;clip-path:inset(0 0 0 100%)}}
 }
-@media (prefers-reduced-motion:reduce){.bk,.cloud,.rays,.tear{animation:none}}
+@media (prefers-reduced-motion:reduce){.bk,.cloud,.rays,.tear{animation:none}.band::before{transition:none}}
 </style>
 </head>
 <body>
@@ -327,7 +332,7 @@ function render(deal){
     rows.map(f=>{const torn=TORN.has(f.t);return `<li class="row${torn?' torn':''}" style="--i:${n++};--s1:${b.s[0]};--s2:${b.s[1]};--sx:${b.s[2]}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}&nbsp;\u00b7&nbsp;${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Level</small>${ic(bi)}<b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
   });
   list.innerHTML=html||'<p class="empty">Nothing here. Pick another level.</p>';
-  clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2800);
+  stuckBands&&requestAnimationFrame(stuckBands);clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2800);
 }
 (function(){const sc=$('scale'),mb=$('minibar');if(!('IntersectionObserver'in window))return;
   new IntersectionObserver(([e])=>{const on=!e.isIntersecting&&e.boundingClientRect.top<0;mb.classList.toggle('on',on);document.documentElement.classList.toggle('barOn',on)}).observe(sc)})();
@@ -387,6 +392,9 @@ function updateLevel(){window.setLevel&&window.setLevel(computeL())}
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf)}else{last=performance.now();raf=requestAnimationFrame(frame)}});
   raf=requestAnimationFrame(frame);
 })();
+function stuckBands(){document.querySelectorAll('.band').forEach(b=>{const top=parseFloat(getComputedStyle(b).top)||0,r=b.getBoundingClientRect(),sb=b.parentElement.getBoundingClientRect().bottom;b.classList.toggle('stuck',r.top<=top+1&&scrollY>2&&sb>r.height+top+4)})}
+addEventListener('scroll',()=>{if(stuckBands.f)return;stuckBands.f=requestAnimationFrame(()=>{stuckBands.f=0;stuckBands()})},{passive:true});
+addEventListener('resize',stuckBands);
 let st=0;addEventListener('scroll',()=>{if(st)return;st=requestAnimationFrame(()=>{st=0;updateLevel()})},{passive:true});
 updateLevel();
 </script>
