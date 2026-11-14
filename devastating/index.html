@@ -257,12 +257,12 @@ const BANDS=[
  {name:'Bittersweet',blurb:'Tears, but the gentle kind.',icon:'part',from:20,to:26,s:['#76627c','#4f4568','#fff0e0']},
  {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:27,to:31,s:['#f7ca82','#eaa653','#2b1c0c']}];
 const FILMS=[
- ['One Day',2011], ['Eternal Sunshine of the Spotless Mind',2004], ['Finch',2021], ['12 Years a Slave',2013], ['Meet Joe Black',1998], ['A Beautiful Mind',2001],
- ['Saving Mr. Banks',2013], ['Love & Other Drugs',2010], ['Passengers',2016], ['Source Code',2011], ['Blood Red Sky',2021], ['Lost in Translation',2003],
- ['Death Wish',2018], ['Oblivion',2013], ['Extinction',2015], ['Django Unchained',2012], ['The Bucket List',2007], ['Sully',2016],
- ['One Battle After Another',2025], ['Eagle Eye',2008], ['Sleepless in Seattle',1993], ['The Accountant 2',2025], ['Collateral',2004], ['John Carter',2012],
- ['The Martian',2015], ['The Pursuit of Happyness',2006], ['The Shawshank Redemption',1994], ['Green Book',2018], ['The Intern',2015], ['You\u2019ve Got Mail',1998],
- ['Yes Man',2008]
+ ['One Day',2011,'Romantic drama'], ['Eternal Sunshine of the Spotless Mind',2004,'Sci-fi romance'], ['Finch',2021,'Sci-fi drama'], ['12 Years a Slave',2013,'Historical drama'], ['Meet Joe Black',1998,'Romantic fantasy'], ['A Beautiful Mind',2001,'Biographical drama'],
+ ['Saving Mr. Banks',2013,'Biographical drama'], ['Love & Other Drugs',2010,'Romantic dramedy'], ['Passengers',2016,'Sci-fi romance'], ['Source Code',2011,'Sci-fi thriller'], ['Blood Red Sky',2021,'Action thriller'], ['Lost in Translation',2003,'Romantic drama'],
+ ['Death Wish',2018,'Action thriller'], ['Oblivion',2013,'Sci-fi action'], ['Extinction',2015,'Sci-fi thriller'], ['Django Unchained',2012,'Western'], ['The Bucket List',2007,'Comedy drama'], ['Sully',2016,'Biographical drama'],
+ ['One Battle After Another',2025,'Action thriller'], ['Eagle Eye',2008,'Action thriller'], ['Sleepless in Seattle',1993,'Romantic comedy'], ['The Accountant 2',2025,'Action thriller'], ['Collateral',2004,'Crime thriller'], ['John Carter',2012,'Sci-fi adventure'],
+ ['The Martian',2015,'Sci-fi survival'], ['The Pursuit of Happyness',2006,'Biographical drama'], ['The Shawshank Redemption',1994,'Prison drama'], ['Green Book',2018,'Biographical comedy'], ['The Intern',2015,'Comedy drama'], ['You\u2019ve Got Mail',1998,'Romantic comedy'],
+ ['Yes Man',2008,'Comedy']
 ].map(([t,y,k],i)=>({t,y,k:k||'Film',r:i+1,b:BANDS.findIndex(b=>i+1>=b.from&&i+1<=b.to)}));
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -324,7 +324,7 @@ function render(deal){
     if(tier!=='all'&&tier!==bi)return;
     const rows=FILMS.filter(f=>f.b===bi);if(!rows.length)return;
     html+=`<section class="tier" data-i="${bi}" aria-labelledby="h${bi}"><h2 class="band" id="h${bi}">${ic(bi)}<span class="nm">${b.name}</span><span class="bl">${esc(b.blurb)}</span><span class="ct">ranks ${b.from}–${b.to}</span></h2><ol>`+
-    rows.map(f=>{const torn=TORN.has(f.t);return `<li class="row${torn?' torn':''}" style="--i:${n++};--s1:${b.s[0]};--s2:${b.s[1]};--sx:${b.s[2]}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}</span><span>${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Level</small>${ic(bi)}<b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
+    rows.map(f=>{const torn=TORN.has(f.t);return `<li class="row${torn?' torn':''}" style="--i:${n++};--s1:${b.s[0]};--s2:${b.s[1]};--sx:${b.s[2]}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}&nbsp;\u00b7&nbsp;${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Level</small>${ic(bi)}<b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
   });
   list.innerHTML=html||'<p class="empty">Nothing here. Pick another level.</p>';
   clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2800);
