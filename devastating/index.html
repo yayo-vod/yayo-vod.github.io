@@ -255,13 +255,14 @@ const BANDS=[
  {name:'Heartbroken',blurb:'You will need a minute.',icon:'heavy',from:7,to:12,s:['#1f3763','#142645','#dce6f2']},
  {name:'Aching',blurb:'It lingers on the way home.',icon:'rain',from:13,to:19,s:['#33507c','#223c62','#e8f0fa']},
  {name:'Bittersweet',blurb:'Tears, but the gentle kind.',icon:'part',from:20,to:26,s:['#76627c','#4f4568','#fff0e0']},
- {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:27,to:32,s:['#f7ca82','#eaa653','#2b1c0c']}];
+ {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:27,to:31,s:['#f7ca82','#eaa653','#2b1c0c']}];
 const FILMS=[
- ['One Day',2011],['Eternal Sunshine of the Spotless Mind',2004],['12 Years a Slave',2013],['Kidding',2018,'Series'],['Finch',2021],['Meet Joe Black',1998],
- ['A Beautiful Mind',2001],['Love & Other Drugs',2010],['Saving Mr. Banks',2013],['The Pursuit of Happyness',2006],['Passengers',2016],['Source Code',2011],
- ['Lost in Translation',2003],['The Bucket List',2007],['Death Wish',2018],['Oblivion',2013],['Blood Red Sky',2021],['Django Unchained',2012],['Extinction',2015],
- ['The Shawshank Redemption',1994],['Eagle Eye',2008],['One Battle After Another',2025],['The Accountant 2',2025],['Collateral',2004],['Sully',2016],['John Carter',2012],
- ['Green Book',2018],['The Martian',2015],['The Intern',2015],['You\u2019ve Got Mail',1998],['Sleepless in Seattle',1993],['Yes Man',2008]
+ ['One Day',2011], ['Eternal Sunshine of the Spotless Mind',2004], ['Finch',2021], ['12 Years a Slave',2013], ['Meet Joe Black',1998], ['A Beautiful Mind',2001],
+ ['Saving Mr. Banks',2013], ['Love & Other Drugs',2010], ['Passengers',2016], ['Source Code',2011], ['Blood Red Sky',2021], ['Lost in Translation',2003],
+ ['Death Wish',2018], ['Oblivion',2013], ['Extinction',2015], ['Django Unchained',2012], ['The Bucket List',2007], ['Sully',2016],
+ ['One Battle After Another',2025], ['Eagle Eye',2008], ['Sleepless in Seattle',1993], ['The Accountant 2',2025], ['Collateral',2004], ['John Carter',2012],
+ ['The Martian',2015], ['The Pursuit of Happyness',2006], ['The Shawshank Redemption',1994], ['Green Book',2018], ['The Intern',2015], ['You\u2019ve Got Mail',1998],
+ ['Yes Man',2008]
 ].map(([t,y,k],i)=>({t,y,k:k||'Film',r:i+1,b:BANDS.findIndex(b=>i+1>=b.from&&i+1<=b.to)}));
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
