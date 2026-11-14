@@ -59,8 +59,9 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
 .poster.rain{--p-bg:#0b1322;--p-ink:#e4edf8;--p-line:rgba(228,237,248,.26);--p-accent:#f4b468;--p-accent-text:#f4b468;--p-display:"Instrument Serif",Georgia,serif;--p-cond:"Instrument Serif",Georgia,serif;background:radial-gradient(120% 80% at 50% 115%,#1a2d52,#0b1322 66%)}
 .rain .p-word{text-transform:none;font-style:italic;font-size:38cqw;letter-spacing:-.02em;text-shadow:0 0 44px rgba(130,185,255,.45)}
 .rain .p-bottom h2{font:400 1.95rem/1.05 var(--p-cond);text-transform:none;letter-spacing:0}
-.poster>.streaks{position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(103deg,transparent 0 22px,rgba(150,195,255,.1) 22px 23px,transparent 23px 41px);-webkit-mask-image:linear-gradient(180deg,transparent,#000 45%,transparent);mask-image:linear-gradient(180deg,transparent,#000 45%,transparent);opacity:.55}
-@media (prefers-reduced-motion:no-preference){.poster>.streaks{animation:rainfall 1.6s linear infinite}@keyframes rainfall{to{background-position:0 82px}}}
+.poster>.streaks{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent,#000 28%,#000 72%,transparent);mask-image:linear-gradient(180deg,transparent,#000 28%,#000 72%,transparent)}
+.poster>.streaks::before{content:"";position:absolute;inset:-35%;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22220%22%20height%3D%22260%22%20viewBox%3D%220%200%20220%20260%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%239cc4ff%22%20stop-opacity%3D%220%22/%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23bcd8ff%22%20stop-opacity%3D%22.9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e9f3ff%22%20stop-opacity%3D%220%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x%3D%227.6%22%20y%3D%22122.5%22%20width%3D%221.6%22%20height%3D%22112%22%20rx%3D%220.8%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.8%22/%3E%3Crect%20x%3D%2227.1%22%20y%3D%2231.8%22%20width%3D%221.6%22%20height%3D%22112%22%20rx%3D%220.8%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%2242.8%22%20y%3D%2230.1%22%20width%3D%221%22%20height%3D%2278%22%20rx%3D%220.5%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.8%22/%3E%3Crect%20x%3D%2268.7%22%20y%3D%2294.4%22%20width%3D%221%22%20height%3D%22112%22%20rx%3D%220.5%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.35%22/%3E%3Crect%20x%3D%2280.5%22%20y%3D%22169.6%22%20width%3D%221%22%20height%3D%2262%22%20rx%3D%220.5%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.8%22/%3E%3Crect%20x%3D%22101.6%22%20y%3D%22120.6%22%20width%3D%221.2%22%20height%3D%22112%22%20rx%3D%220.6%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.65%22/%3E%3Crect%20x%3D%22122.0%22%20y%3D%2298.4%22%20width%3D%221.4%22%20height%3D%2246%22%20rx%3D%220.7%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.8%22/%3E%3Crect%20x%3D%22145.0%22%20y%3D%22149.0%22%20width%3D%221.4%22%20height%3D%2246%22%20rx%3D%220.7%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.5%22/%3E%3Crect%20x%3D%22160.1%22%20y%3D%2220.2%22%20width%3D%221%22%20height%3D%2246%22%20rx%3D%220.5%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.8%22/%3E%3Crect%20x%3D%22175.9%22%20y%3D%2271.7%22%20width%3D%221%22%20height%3D%2278%22%20rx%3D%220.5%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.35%22/%3E%3Crect%20x%3D%22195.7%22%20y%3D%22100.9%22%20width%3D%221.6%22%20height%3D%2246%22%20rx%3D%220.8%22%20fill%3D%22url%28%23g%29%22%20opacity%3D%220.8%22/%3E%3C/svg%3E") 0 0/220px 260px repeat;transform:rotate(14deg)}
+@media (prefers-reduced-motion:no-preference){.poster>.streaks::before{animation:rainfall 2.4s linear infinite}@keyframes rainfall{to{background-position:0 260px}}}
 .spot{background:radial-gradient(circle 15rem at var(--mx) var(--my),rgba(255,236,176,.26),rgba(255,236,176,.07) 45%,transparent 72%);opacity:.38;transition:opacity .45s}
 .poster:hover .spot,.poster:focus-visible .spot{opacity:1}
 .glint{overflow:hidden}
@@ -93,6 +94,30 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 }
 @media (prefers-reduced-motion:reduce){.grain{animation:none}.glint{display:none}.poster{transform:none!important}}
+
+.how{margin-top:clamp(3.5rem,8vw,5.5rem)}
+.how h2{display:flex;align-items:center;gap:1.2rem;margin:0 0 1.5rem;font:600 .8rem/1 var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--brass)}
+.how h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--brass),transparent)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid rgba(231,184,90,.35);border-radius:16px;background:linear-gradient(180deg,rgba(231,184,90,.07),rgba(231,184,90,.015));box-shadow:0 0 60px rgba(231,184,90,.07),inset 0 0 40px rgba(122,28,48,.18);position:relative}
+.step{position:relative;display:grid;grid-template-columns:auto 1fr;grid-template-areas:"num ic" "t t" "p p";align-items:center;gap:.35rem 1rem;padding:1.5rem 1.5rem 1.6rem;transition:background .3s}
+.step+.step{border-left:2px dashed rgba(231,184,90,.35)}
+.step+.step::before,.step+.step::after{content:"";position:absolute;left:-1px;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--bg);border:1px solid rgba(231,184,90,.35);transform:translateX(-50%)}
+.step+.step::before{top:-.75rem;clip-path:inset(50% 0 0 0)}
+.step+.step::after{bottom:-.75rem;clip-path:inset(0 0 50% 0)}
+.step:hover{background:rgba(231,184,90,.07)}
+.step .num{grid-area:num;font:400 3.6rem/.9 var(--display);color:var(--cream);text-shadow:0 0 22px rgba(255,214,140,.6)}
+.step svg{grid-area:ic;justify-self:end;width:2.4rem;height:2.4rem;fill:none;stroke:var(--brass);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.step b{grid-area:t;margin-top:.6rem;font:600 1.15rem/1.2 var(--body);letter-spacing:.01em}
+.step p{grid-area:p;font-size:.95rem;color:var(--dim)}
+@media (max-width:40rem){
+  .steps{grid-template-columns:1fr}
+  .step+.step{border-left:0;border-top:2px dashed rgba(231,184,90,.35)}
+  .step+.step::before,.step+.step::after{top:-.75rem;bottom:auto;transform:translateY(0)}
+  .step+.step::before{left:-.75rem;clip-path:inset(0 0 0 50%)}
+  .step+.step::after{left:auto;right:-.75rem;transform:none;clip-path:inset(0 50% 0 0)}
+  .step{grid-template-columns:auto 1fr;padding:1.2rem 1.3rem}
+}
+@media (prefers-reduced-motion:no-preference){html.ready .how{animation:fadeIn .9s ease .7s both}}
 </style>
 </head>
 <body>
@@ -115,7 +140,7 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
       <div class="p-word" aria-hidden="true">War<i>.</i></div>
       <div class="p-bottom">
         <h2>War films, most reliable first</h2>
-        <p>Graded A to E &middot; no spoilers</p>
+        <p>Graded A to E</p>
         <span class="p-go">Open the list <i></i></span>
       </div></a></li>
     <li><a class="poster rain" href="devastating/">
@@ -124,12 +149,24 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
       <div class="p-word" aria-hidden="true">Tears<i>.</i></div>
       <div class="p-bottom">
         <h2>Emotionally devastating, ranked</h2>
-        <p>Storm to sunrise &middot; no spoilers</p>
+        <p>Storm to sunrise</p>
         <span class="p-go">Open the list <i></i></span>
       </div></a></li>
   </ul>
-
-  <p class="foot">Every list is a poster with its own look. Inside, each film is a ticket. Open one and pick your night.</p>
+  <section class="how" aria-labelledby="howh">
+    <h2 id="howh">How it works</h2>
+    <ol class="steps">
+      <li class="step"><span class="num" aria-hidden="true">1</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="3.5" width="18" height="25" rx="1.5"/><path d="M11 21h10M11 25h6"/><circle cx="16" cy="12" r="3.2"/></svg>
+        <b>Pick a poster</b><p>Every list has a look of its own.</p></li>
+      <li class="step"><span class="num" aria-hidden="true">2</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 11a2 2 0 012-2h22a2 2 0 012 2v2.2a2.8 2.8 0 000 5.6V21a2 2 0 01-2 2H5a2 2 0 01-2-2v-2.2a2.8 2.8 0 000-5.6z"/><path d="M21 9v14" stroke-dasharray="2 2.4"/></svg>
+        <b>Tear a ticket</b><p>Each film waits behind its own stub.</p></li>
+      <li class="step"><span class="num" aria-hidden="true">3</span>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4l3.2 7.6 8.3.7-6.3 5.5 1.9 8.1L16 21.4l-7.1 4.5 1.9-8.1-6.3-5.5 8.3-.7z"/></svg>
+        <b>Find your night</b><p>Open the title and press play.</p></li>
+    </ol>
+  </section>
 </div>
 <script>
 (function(){
