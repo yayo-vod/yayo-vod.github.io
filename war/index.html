@@ -108,8 +108,8 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 .tier ol{display:grid;gap:clamp(.9rem,2.4vw,1.5rem);margin-top:clamp(1rem,3vw,1.6rem)}
 .row{--sl:clamp(4.2rem,11vw,7rem);--sr:clamp(5rem,13vw,8.5rem);--cut:.82rem;--zz-l:polygon(0 0, calc(100% - 6px) 0.0%, 100% 7.14%, calc(100% - 6px) 14.29%, 100% 21.43%, calc(100% - 6px) 28.57%, 100% 35.71%, calc(100% - 6px) 42.86%, 100% 50.0%, calc(100% - 6px) 57.14%, 100% 64.29%, calc(100% - 6px) 71.43%, 100% 78.57%, calc(100% - 6px) 85.71%, 100% 92.86%, calc(100% - 6px) 100.0%, 0 100%);--zz-r:polygon(6px 0, 100% 0, 100% 100%, 6px 100.0%, 0px 92.86%, 6px 85.71%, 0px 78.57%, 6px 71.43%, 0px 64.29%, 6px 57.14%, 0px 50.0%, 6px 42.86%, 0px 35.71%, 6px 28.57%, 0px 21.43%, 6px 14.29%, 0px 7.14%, 6px 0.0%);
   position:relative;filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.row:hover{transform:translateY(-5px)}
-.ticket{position:relative;display:grid;grid-template-columns:var(--sl) minmax(0,1fr) var(--sr);min-height:clamp(6.6rem,17vw,9.6rem);color:var(--bone);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.row:hover .ticket{transform:translateY(-5px)}
+.ticket{transition:transform .35s cubic-bezier(.2,.8,.2,1);position:relative;display:grid;grid-template-columns:var(--sl) minmax(0,1fr) var(--sr);min-height:clamp(6.6rem,17vw,9.6rem);color:var(--bone);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .ticket:focus-visible{outline:3px solid var(--brass);outline-offset:6px}
 .stubl,.tt,.stubr{position:relative}
 .stubl{display:grid;place-items:center;align-content:center;gap:.35rem;background:var(--bone);color:var(--ink);border-right:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem;transform-origin:0 100%;
@@ -143,7 +143,7 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 .row.dim .stubr{background:#8d9079}
 
 /* sealed: stub twitches on hover to hint it can be torn */
-.row:not(.torn) .ticket:hover .stubl{transform:translate(-3px,1px) rotate(-1.4deg)}
+.row:not(.torn):hover .stubl{transform:translate(-3px,1px) rotate(-1.4deg)}
 /* torn (final state, also what a restored visit shows) */
 .row.torn .stubl{transform:translate(-.7rem,.5rem) rotate(-5deg);clip-path:var(--zz-l)}
 .row.torn .tt{clip-path:var(--zz-r)}
