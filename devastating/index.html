@@ -253,22 +253,22 @@ const ICONS={
 const BANDS=[
  {name:'Inconsolable',blurb:'Clear the rest of the evening.',icon:'storm',from:1,to:6,s:['#1a2440','#0c1226','#dce6f2']},
  {name:'Heartbroken',blurb:'You will need a minute.',icon:'heavy',from:7,to:12,s:['#1f3763','#142645','#dce6f2']},
- {name:'Aching',blurb:'It lingers on the way home.',icon:'rain',from:13,to:18,s:['#33507c','#223c62','#e8f0fa']},
- {name:'Bittersweet',blurb:'Tears, but the gentle kind.',icon:'part',from:19,to:24,s:['#76627c','#4f4568','#fff0e0']},
- {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:25,to:29,s:['#f7ca82','#eaa653','#2b1c0c']}];
+ {name:'Aching',blurb:'It lingers on the way home.',icon:'rain',from:13,to:19,s:['#33507c','#223c62','#e8f0fa']},
+ {name:'Bittersweet',blurb:'Tears, but the gentle kind.',icon:'part',from:20,to:26,s:['#76627c','#4f4568','#fff0e0']},
+ {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:27,to:32,s:['#f7ca82','#eaa653','#2b1c0c']}];
 const FILMS=[
- ['One Day',2011],['Eternal Sunshine of the Spotless Mind',2004],['Kidding',2018,'Series'],['A Beautiful Mind',2001],['Saving Mr. Banks',2013],['The Shawshank Redemption',1994],
- ['Finch',2021],['Eagle Eye',2008],['Source Code',2011],['Lost in Translation',2003],['12 Years a Slave',2013],['The Intern',2015],
- ['You’ve Got Mail',1998],['Sleepless in Seattle',1993],['John Carter',2012],['Oblivion',2013],['Blood Red Sky',2021],['Death Wish',2018],
- ['Extinction',2015],['Sully',2016],['One Battle After Another',2025],['The Pursuit of Happyness',2006],['The Accountant 2',2025],['Collateral',2004],
- ['Django Unchained',2012],['Meet Joe Black',1998],['The Bucket List',2007],['Green Book',2018],['Yes Man',2008]
+ ['One Day',2011],['Eternal Sunshine of the Spotless Mind',2004],['12 Years a Slave',2013],['Kidding',2018,'Series'],['Finch',2021],['Meet Joe Black',1998],
+ ['A Beautiful Mind',2001],['Love & Other Drugs',2010],['Saving Mr. Banks',2013],['The Pursuit of Happyness',2006],['Passengers',2016],['Source Code',2011],
+ ['Lost in Translation',2003],['The Bucket List',2007],['Death Wish',2018],['Oblivion',2013],['Blood Red Sky',2021],['Django Unchained',2012],['Extinction',2015],
+ ['The Shawshank Redemption',1994],['Eagle Eye',2008],['One Battle After Another',2025],['The Accountant 2',2025],['Collateral',2004],['Sully',2016],['John Carter',2012],
+ ['Green Book',2018],['The Martian',2015],['The Intern',2015],['You\u2019ve Got Mail',1998],['Sleepless in Seattle',1993],['Yes Man',2008]
 ].map(([t,y,k],i)=>({t,y,k:k||'Film',r:i+1,b:BANDS.findIndex(b=>i+1>=b.from&&i+1<=b.to)}));
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ic=(i,extra='')=>`<span class="ic lv${i} ${extra}" aria-hidden="true">${ICONS[BANDS[i].icon]}</span>`;
 let tier='all',TORN=new Set();
-try{TORN=new Set(JSON.parse(localStorage.getItem('yayo-devastating-torn')||'[]'))}catch(e){}
-const save=()=>{try{localStorage.setItem('yayo-devastating-torn',JSON.stringify([...TORN]))}catch(e){}};
+try{TORN=new Set(JSON.parse(localStorage.getItem('yayo-devastating-torn-v2')||'[]'))}catch(e){}
+const save=()=>{try{localStorage.setItem('yayo-devastating-torn-v2',JSON.stringify([...TORN]))}catch(e){}};
 const label=(f,b,torn)=>esc(`${torn?f.t+'. ':''}Ranked ${f.r} of ${FILMS.length}, ${b.name}. ${f.k}, ${f.y}.${torn?'':' Title hidden. Activate to tear the ticket and reveal it.'}`);
 
 function bits(li){
@@ -281,8 +281,8 @@ function bits(li){
   }
 }
 function tear(li){
-  const r=+li.dataset.r;if(TORN.has(r))return;TORN.add(r);save();
-  const f=FILMS[r-1],b=BANDS[f.b],tk=li.querySelector('.ticket');
+  const r=+li.dataset.r,f=FILMS[r-1],b=BANDS[f.b];if(TORN.has(f.t))return;TORN.add(f.t);save();
+  const tk=li.querySelector('.ticket');
   tk.setAttribute('aria-pressed','true');tk.setAttribute('aria-label',label(f,b,true).replace(/&amp;/g,'&'));
   if(!REDUCED){li.classList.add('tearing');bits(li);try{navigator.vibrate&&navigator.vibrate(14)}catch(e){}setTimeout(()=>{li.classList.add('torn');li.classList.remove('tearing')},950)}
   else li.classList.add('torn');
@@ -323,7 +323,7 @@ function render(deal){
     if(tier!=='all'&&tier!==bi)return;
     const rows=FILMS.filter(f=>f.b===bi);if(!rows.length)return;
     html+=`<section class="tier" data-i="${bi}" aria-labelledby="h${bi}"><h2 class="band" id="h${bi}">${ic(bi)}<span class="nm">${b.name}</span><span class="bl">${esc(b.blurb)}</span><span class="ct">ranks ${b.from}–${b.to}</span></h2><ol>`+
-    rows.map(f=>{const torn=TORN.has(f.r);return `<li class="row${torn?' torn':''}" style="--i:${n++};--s1:${b.s[0]};--s2:${b.s[1]};--sx:${b.s[2]}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}</span><span>${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Level</small>${ic(bi)}<b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
+    rows.map(f=>{const torn=TORN.has(f.t);return `<li class="row${torn?' torn':''}" style="--i:${n++};--s1:${b.s[0]};--s2:${b.s[1]};--sx:${b.s[2]}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}</span><span>${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Level</small>${ic(bi)}<b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
   });
   list.innerHTML=html||'<p class="empty">Nothing here. Pick another level.</p>';
   clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2800);
