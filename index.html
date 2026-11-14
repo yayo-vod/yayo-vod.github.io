@@ -7,13 +7,15 @@
 <meta name="theme-color" content="#0d090a">
 <title>Yayo VOD Suggestions</title>
 <link rel="stylesheet" href="fonts/fonts.css">
+<link rel="preload" href="fonts/instrument-serif-a20ac7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-serif-i-99cc6e.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/limelight-1f8077.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/saira-stencil-one-ce0d6b.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/big-shoulders-display-48e1b4.woff2" as="font" type="font/woff2" crossorigin>
 <script>
 (function(d){var q=[],done=false;function go(){if(done)return;done=true;d.classList.add('ready');q.forEach(function(f){f()})}
 d.classList.add('js');window.onReady=function(f){done?f():q.push(f)};
-var F=d.fonts;if(F&&F.load){Promise.all(["400 1em Limelight","400 1em \"Saira Stencil One\"","800 1em \"Big Shoulders Display\"","500 1em \"IBM Plex Mono\"","600 1em \"IBM Plex Mono\"","400 1em \"IBM Plex Sans\""].map(function(x){return F.load(x,'A')})).then(go,go)}else go();setTimeout(go,2500)})(document.documentElement)
+var F=d.fonts;if(F&&F.load){Promise.all(["400 1em Limelight","400 1em \"Instrument Serif\"","italic 400 1em \"Instrument Serif\"","400 1em \"Saira Stencil One\"","800 1em \"Big Shoulders Display\"","500 1em \"IBM Plex Mono\"","600 1em \"IBM Plex Mono\"","400 1em \"IBM Plex Sans\""].map(function(x){return F.load(x,'A')})).then(go,go)}else go();setTimeout(go,2500)})(document.documentElement)
 </script>
 <style>
 /* LOBBY: a theatre marquee with chasing bulbs over a dark foyer; each list is a one-sheet poster. */
@@ -54,6 +56,11 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
 .poster.live{transition:transform .09s linear}
 .poster:hover,.poster:focus-visible{--lift:-8px}
 .poster>.spot,.poster>.glint,.poster>.grainp{position:absolute;inset:0;pointer-events:none;z-index:0}
+.poster.rain{--p-bg:#0b1322;--p-ink:#e4edf8;--p-line:rgba(228,237,248,.26);--p-accent:#f4b468;--p-accent-text:#f4b468;--p-display:"Instrument Serif",Georgia,serif;--p-cond:"Instrument Serif",Georgia,serif;background:radial-gradient(120% 80% at 50% 115%,#1a2d52,#0b1322 66%)}
+.rain .p-word{text-transform:none;font-style:italic;font-size:38cqw;letter-spacing:-.02em;text-shadow:0 0 44px rgba(130,185,255,.45)}
+.rain .p-bottom h2{font:400 1.95rem/1.05 var(--p-cond);text-transform:none;letter-spacing:0}
+.poster>.streaks{position:absolute;inset:0;pointer-events:none;z-index:0;background:repeating-linear-gradient(103deg,transparent 0 22px,rgba(150,195,255,.1) 22px 23px,transparent 23px 41px);-webkit-mask-image:linear-gradient(180deg,transparent,#000 45%,transparent);mask-image:linear-gradient(180deg,transparent,#000 45%,transparent);opacity:.55}
+@media (prefers-reduced-motion:no-preference){.poster>.streaks{animation:rainfall 1.6s linear infinite}@keyframes rainfall{to{background-position:0 82px}}}
 .spot{background:radial-gradient(circle 15rem at var(--mx) var(--my),rgba(255,236,176,.26),rgba(255,236,176,.07) 45%,transparent 72%);opacity:.38;transition:opacity .45s}
 .poster:hover .spot,.poster:focus-visible .spot{opacity:1}
 .glint{overflow:hidden}
@@ -109,6 +116,15 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
       <div class="p-bottom">
         <h2>War films, most reliable first</h2>
         <p>Graded A to E &middot; no spoilers</p>
+        <span class="p-go">Open the list <i></i></span>
+      </div></a></li>
+    <li><a class="poster rain" href="devastating/">
+      <i class="grainp" aria-hidden="true"></i><i class="streaks" aria-hidden="true"></i><i class="spot" aria-hidden="true"></i><i class="glint" aria-hidden="true"></i>
+      <div class="p-top"><span>List 02</span><span>29 titles</span></div>
+      <div class="p-word" aria-hidden="true">Tears<i>.</i></div>
+      <div class="p-bottom">
+        <h2>Emotionally devastating, ranked</h2>
+        <p>Five levels &middot; no spoilers</p>
         <span class="p-go">Open the list <i></i></span>
       </div></a></li>
   </ul>
