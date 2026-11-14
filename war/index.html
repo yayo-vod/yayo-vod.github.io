@@ -6,10 +6,15 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0e09">
 <title>War Films Ranked</title>
-<script>document.documentElement.classList.add("js")</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=Saira+Stencil+One&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="preload" href="../fonts/saira-stencil-one-ce0d6b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/big-shoulders-display-48e1b4.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/special-elite-143177.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+(function(d){var q=[],done=false;function go(){if(done)return;done=true;d.classList.add('ready');q.forEach(function(f){f()})}
+d.classList.add('js');window.onReady=function(f){done?f():q.push(f)};
+var F=d.fonts;if(F&&F.load){Promise.all(["400 1em \"Saira Stencil One\"","800 1em \"Big Shoulders Display\"","500 1em \"IBM Plex Mono\"","600 1em \"IBM Plex Mono\"","400 1em \"IBM Plex Sans\"","400 1em \"Special Elite\""].map(function(x){return F.load(x,'A')})).then(go,go)}else go();setTimeout(go,2500)})(document.documentElement)
+</script>
 <style>
 /* WAR: a blacked-out cinema. Searchlight sweeps film grain; giant stencil title; every film is a poster-size line of type with a graded stamp. No plots, only names. */
 :root{
@@ -43,7 +48,8 @@ a{color:inherit}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-5%,-2%)}80%{transform:translate(4%,4%)}100%{transform:translate(0,0)}}
 
-.page{position:relative;z-index:1;max-width:74rem;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-bottom:6rem}
+.js:not(.ready) .page{opacity:0}
+.page{transition:opacity .45s ease;position:relative;z-index:1;max-width:74rem;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-bottom:6rem}
 
 /* hero */
 .top{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-top:max(1.2rem,env(safe-area-inset-top,0px));font:500 .74rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
@@ -59,7 +65,11 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 .telegram{margin-top:clamp(1.6rem,4vw,2.6rem);max-width:44rem;font:400 clamp(1rem,2.5vw,1.4rem)/1.55 var(--type);color:var(--brass);text-transform:uppercase;letter-spacing:.04em;min-height:4.7em}
 .js .telegram #tg:not(.ready){visibility:hidden}
 .ch{visibility:hidden}.ch.on{visibility:visible}
-.cur{display:inline-block;width:.58em;height:1.05em;margin-left:.04em;vertical-align:-.17em;background:var(--brass);animation:blink 1s steps(2) infinite}
+.ch.cursor{position:relative}
+.ch.cursor::before,.ch.endcur::after{content:"";position:absolute;top:.12em;bottom:-.08em;width:.55em;background:var(--brass);visibility:visible;animation:blink 1s steps(2) infinite}
+.ch.cursor::before{left:0}
+.ch.endcur{position:relative}
+.ch.endcur::after{left:100%;margin-left:.08em}
 @keyframes blink{50%{opacity:0}}
 .seal{position:absolute;right:0;top:clamp(1rem,4vw,3rem);width:clamp(6.5rem,17vw,12.5rem);color:var(--poppy);transform:rotate(-12deg);opacity:.92}
 .seal svg{display:block;width:100%;height:auto;animation:spin 60s linear infinite}
@@ -187,10 +197,10 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   @keyframes tearStub{0%{transform:none;clip-path:none}18%{transform:translate(-4px,0) rotate(-1.5deg)}40%{transform:translate(-9px,5px) rotate(-5deg);clip-path:var(--zz-l)}62%{transform:translate(-13px,10px) rotate(-8deg)}100%{transform:translate(-.7rem,.5rem) rotate(-5deg);clip-path:var(--zz-l)}}
   @keyframes tearBody{0%{transform:none;clip-path:none}22%{transform:translateX(5px);clip-path:none}40%{clip-path:var(--zz-r)}100%{transform:none;clip-path:var(--zz-r)}}
   @keyframes redactOut{to{transform:translateX(22%) scaleX(.6);opacity:0;clip-path:inset(0 0 0 100%)}}
-  @keyframes titleIn{from{opacity:0;letter-spacing:.2em;transform:translateX(-14px)}to{opacity:1;letter-spacing:.012em;transform:none}}
+  @keyframes titleIn{from{opacity:0;clip-path:inset(-12% 100% -12% 0)}to{opacity:1;clip-path:inset(-12% -6% -12% 0)}}
   @keyframes usedIn{from{opacity:0;transform:rotate(-7deg) scale(2.2)}to{opacity:.9;transform:rotate(-7deg) scale(1)}}
 }
-@media (max-width:34rem){.code,.used{display:none}.row{--cut:.62rem}.redact{font-size:.6rem;letter-spacing:.22em}.redact::before,.redact::after{display:none}}
+@media (max-width:34rem){.row{--cut:.62rem}.redact{font-size:.62rem;letter-spacing:.2em;gap:.45rem}.code{width:3.2rem;right:.75rem;bottom:.7rem}.used{font-size:.86rem;right:.7rem;bottom:.55rem;padding:.15rem .35rem}.meta{gap:.15rem .7rem}.meta span+span::before{margin-right:.7rem}.tt{padding-bottom:2.4rem}}
 .empty{padding:3rem 0;font:500 .9rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
 .foot{margin-top:5rem;padding-top:1.4rem;border-top:2px solid var(--bone);display:grid;gap:.8rem;max-width:46rem;color:var(--dim);font-size:.92rem}
@@ -201,12 +211,14 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   .ladder{grid-template-columns:repeat(2,1fr)}
 }
 @media (prefers-reduced-motion:no-preference){
-  .hero .kicker,.hero h1 .w1,.hero h1 .w2,.ladder{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
-  .hero h1 .w1{animation-delay:.08s}.hero h1 .w2{animation-delay:.2s}
-  .ladder{animation-delay:.9s}
-  @keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+  html.ready .hero .kicker,html.ready .ladder,html.ready .tools{animation:fadeIn .8s ease both}
+  html.ready .hero h1 .w1{animation:wipe .9s cubic-bezier(.2,.8,.2,1) .05s both}
+  html.ready .hero h1 .w2{animation:wipe .9s cubic-bezier(.2,.8,.2,1) .2s both}
+  html.ready .ladder{animation-delay:.8s}html.ready .tools{animation-delay:.95s}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes wipe{from{clip-path:inset(-25% 100% -25% 0)}to{clip-path:inset(-25% -6% -25% 0)}}
 }
-@media (prefers-reduced-motion:reduce){.beam,.grain,.seal svg,.cur{animation:none}}
+@media (prefers-reduced-motion:reduce){.beam,.grain,.seal svg,.ch.cursor::before,.ch.endcur::after{animation:none}}
 </style>
 </head>
 <body>
@@ -347,16 +359,16 @@ ladder();bar();render(false);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.classList.add('ready');return;}
   el.textContent='';
   const spans=[...txt].map(ch=>{const s=document.createElement('span');s.className='ch';s.textContent=ch;el.append(s);return s});
-  const cur=document.createElement('span');cur.className='cur';el.append(cur);
   el.classList.add('ready');
-  let i=0;
+  let i=0,prev=null;
+  function mark(n){if(prev)prev.classList.remove('cursor');if(n<spans.length){spans[n].classList.add('cursor');prev=spans[n]}}
   function tick(){
-    if(i>=spans.length){el.append(cur);return;}
-    spans[i].classList.add('on'); i++;
-    if(i<spans.length) spans[i].before(cur); else el.append(cur);
+    if(i>=spans.length){if(prev)prev.classList.remove('cursor');spans[spans.length-1].classList.add('endcur');return;}
+    spans[i].classList.add('on'); i++; mark(i);
     const c=txt[i-1]; setTimeout(tick, c==='.'?380:c===' '?42:26+Math.random()*34);
   }
-  setTimeout(tick,900);
+  mark(0);
+  window.onReady(()=>setTimeout(tick,650));
 })();
 </script>
 </body>
