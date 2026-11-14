@@ -89,33 +89,61 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 .band .nm{font:800 clamp(1.3rem,3.6vw,2rem)/1 var(--cond);text-transform:uppercase;letter-spacing:.07em}
 .band .bl{font:400 .95rem/1.3 var(--body);color:var(--dim);flex:1 1 14rem}
 .band .ct{font:500 .72rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-/* each film is a ticket: bone stub with the rank, olive-black body with the title, red stub with the grade stamp */
+/* each film is a ticket: bone stub with the rank, olive-black body with the title, red stub with the grade. Sealed tickets hide the title behind a redaction bar; click to tear the stub off and reveal it. */
 .tier ol{display:grid;gap:clamp(.9rem,2.4vw,1.5rem);margin-top:clamp(1rem,3vw,1.6rem)}
-.row{--sl:clamp(4.2rem,11vw,7rem);--sr:clamp(5rem,13vw,8.5rem);--cut:.82rem;position:relative;display:grid;grid-template-columns:var(--sl) minmax(0,1fr) var(--sr);min-height:clamp(6.6rem,17vw,9.6rem);color:var(--bone);background:#141a0f;
-  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s;
-  -webkit-mask:radial-gradient(circle var(--cut) at var(--sl) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at var(--sl) 100%,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 100%,#0000 97%,#000);
-  -webkit-mask-composite:source-in,source-in,source-in;
-  mask:radial-gradient(circle var(--cut) at var(--sl) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at var(--sl) 100%,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 100%,#0000 97%,#000);
-  mask-composite:intersect}
-.row:hover{transform:translateY(-5px) rotate(-.25deg)}
-.stubl{display:grid;place-items:center;align-content:center;gap:.35rem;background:var(--bone);color:var(--ink);border-right:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem}
+.row{--sl:clamp(4.2rem,11vw,7rem);--sr:clamp(5rem,13vw,8.5rem);--cut:.82rem;--zz-l:polygon(0 0, calc(100% - 6px) 0.0%, 100% 7.14%, calc(100% - 6px) 14.29%, 100% 21.43%, calc(100% - 6px) 28.57%, 100% 35.71%, calc(100% - 6px) 42.86%, 100% 50.0%, calc(100% - 6px) 57.14%, 100% 64.29%, calc(100% - 6px) 71.43%, 100% 78.57%, calc(100% - 6px) 85.71%, 100% 92.86%, calc(100% - 6px) 100.0%, 0 100%);--zz-r:polygon(6px 0, 100% 0, 100% 100%, 6px 100.0%, 0px 92.86%, 6px 85.71%, 0px 78.57%, 6px 71.43%, 0px 64.29%, 6px 57.14%, 0px 50.0%, 6px 42.86%, 0px 35.71%, 6px 28.57%, 0px 21.43%, 6px 14.29%, 0px 7.14%, 6px 0.0%);
+  position:relative;filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.row:hover{transform:translateY(-5px)}
+.ticket{position:relative;display:grid;grid-template-columns:var(--sl) minmax(0,1fr) var(--sr);min-height:clamp(6.6rem,17vw,9.6rem);color:var(--bone);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ticket:focus-visible{outline:3px solid var(--brass);outline-offset:6px}
+.stubl,.tt,.stubr{position:relative}
+.stubl{display:grid;place-items:center;align-content:center;gap:.35rem;background:var(--bone);color:var(--ink);border-right:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem;transform-origin:0 100%;
+  -webkit-mask:radial-gradient(circle var(--cut) at 100% 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 100% 100%,#0000 97%,#000);-webkit-mask-composite:source-in;
+  mask:radial-gradient(circle var(--cut) at 100% 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 100% 100%,#0000 97%,#000);mask-composite:intersect;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .stubl small{font:600 .56rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;opacity:.7}
 .rk{font:400 clamp(2.2rem,7vw,3.8rem)/1 var(--stencil);font-variant-numeric:tabular-nums}
-.tt{min-width:0;position:relative;display:grid;align-content:center;gap:.5rem;padding:.9rem clamp(.9rem,3vw,1.8rem);overflow:hidden;
-  background:radial-gradient(80% 140% at 100% 100%,rgba(255,240,190,.07),transparent 60%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.012) 3px 4px)}
+.tt{min-width:0;display:grid;align-content:center;gap:.55rem;padding:.9rem clamp(.9rem,3vw,1.8rem);overflow:hidden;background-color:#141a0f;
+  background-image:radial-gradient(80% 140% at 100% 100%,rgba(255,240,190,.07),transparent 60%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.012) 3px 4px);
+  -webkit-mask:radial-gradient(circle var(--cut) at 0 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 0 100%,#0000 97%,#000),radial-gradient(circle var(--cut) at 100% 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 100% 100%,#0000 97%,#000);-webkit-mask-composite:source-in,source-in,source-in;
+  mask:radial-gradient(circle var(--cut) at 0 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 0 100%,#0000 97%,#000),radial-gradient(circle var(--cut) at 100% 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 100% 100%,#0000 97%,#000);mask-composite:intersect}
 .tt::before{content:"";position:absolute;inset:.45rem;border:1px dashed rgba(236,233,219,.16);pointer-events:none}
-.tt h3{font:800 clamp(1.7rem,5.4vw,3.9rem)/.95 var(--cond);text-transform:uppercase;letter-spacing:.012em;overflow-wrap:anywhere;text-wrap:balance;transition:color .25s}
-.row:hover .tt h3{color:#fff}
+.ttl{--fs:clamp(1.7rem,5.4vw,3.9rem);display:grid;font-size:var(--fs)}
+.ttl h3,.ttl .redact{grid-area:1/1}
+.ttl h3{font:800 1em/.95 var(--cond);text-transform:uppercase;letter-spacing:.012em;overflow-wrap:anywhere;text-wrap:balance;visibility:hidden}
+.redact{align-self:center;justify-self:start;width:min(100%,calc(var(--fs)*7));height:calc(var(--fs)*.8);display:flex;align-items:center;justify-content:center;gap:.7rem;overflow:hidden;background:repeating-linear-gradient(135deg,#020301 0 9px,#0b0f08 9px 18px);box-shadow:0 0 0 1px rgba(236,233,219,.12),inset 0 0 0 2px #020301;color:var(--brass);font:600 .7rem/1 var(--mono);letter-spacing:.34em;text-transform:uppercase;white-space:nowrap}
+.redact::before,.redact::after{content:"\25B8\25B8";letter-spacing:.1em;opacity:.7}
+.redact::before{content:"\25C2\25C2"}
 .meta{display:flex;flex-wrap:wrap;gap:.2rem 1rem;font:500 .72rem/1.2 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
 .meta span+span::before{content:"/";margin-right:1rem;color:var(--poppy)}
 .code{position:absolute;right:clamp(.9rem,3vw,1.8rem);bottom:.9rem;width:clamp(4rem,10vw,6.5rem);height:1rem;opacity:.35;background:repeating-linear-gradient(90deg,var(--bone) 0 2px,transparent 2px 4px,var(--bone) 4px 5px,transparent 5px 8px,var(--bone) 8px 11px,transparent 11px 13px)}
-.stubr{display:grid;place-items:center;align-content:center;gap:.5rem;background:var(--poppy);color:var(--ink);border-left:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem}
+.used{position:absolute;right:clamp(.9rem,3vw,1.8rem);bottom:.7rem;opacity:0;font:400 clamp(.9rem,2.4vw,1.2rem)/1 var(--stencil);letter-spacing:.12em;text-transform:uppercase;color:var(--poppy);border:2px solid var(--poppy);padding:.2rem .45rem;transform:rotate(-7deg);pointer-events:none}
+.stubr{display:grid;place-items:center;align-content:center;gap:.5rem;background:var(--poppy);color:var(--ink);border-left:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem;
+  -webkit-mask:radial-gradient(circle var(--cut) at 0 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 0 100%,#0000 97%,#000);-webkit-mask-composite:source-in;
+  mask:radial-gradient(circle var(--cut) at 0 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 0 100%,#0000 97%,#000);mask-composite:intersect}
 .stubr small{font:600 .56rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase}
 .stubr b{font:400 clamp(2.4rem,8vw,4rem)/1 var(--stencil);transform:rotate(-6deg)}
 .stubr .pips{display:flex;gap:3px}
 .stubr .pips i{display:block;width:.5rem;height:.3rem;background:rgba(10,13,8,.25)}
 .stubr .pips i.on{background:var(--ink)}
 .row.dim .stubr{background:#8d9079}
+
+/* sealed: stub twitches on hover to hint it can be torn */
+.row:not(.torn) .ticket:hover .stubl{transform:translate(-3px,1px) rotate(-1.4deg)}
+/* torn (final state, also what a restored visit shows) */
+.row.torn .stubl{transform:translate(-.7rem,.5rem) rotate(-5deg);clip-path:var(--zz-l)}
+.row.torn .tt{clip-path:var(--zz-r)}
+.row.torn .ttl h3{visibility:visible}
+.row.torn .redact,.row.torn .code{display:none}
+.row.torn .used{opacity:.9}
+.row.torn .ticket{cursor:default}
+.bit{position:absolute;width:7px;height:5px;background:var(--bone);z-index:9;pointer-events:none;opacity:0}
+
+/* tools under the ladder */
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;margin-top:1.4rem}
+.tools button{all:unset;box-sizing:border-box;cursor:pointer;padding:.65rem .9rem;border:1.5px solid var(--bone);font:600 .72rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.tools button:hover{background:rgba(236,233,219,.1)}
+.tools button:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+.tools p{flex:1 1 16rem;font:500 .72rem/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 
 /* quick-switch bar, appears once the big grade ladder scrolls away */
 .minibar{position:fixed;top:0;left:0;right:0;z-index:20;transform:translateY(-110%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;background:rgba(10,13,8,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:2px solid var(--bone);padding-top:env(safe-area-inset-top,0px)}
@@ -149,7 +177,20 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   @keyframes bandIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
 }
 @media (prefers-reduced-motion:reduce){#slam{display:none}}
-@media (max-width:34rem){.code{display:none}.row{--cut:.62rem}}
+
+@media (prefers-reduced-motion:no-preference){
+  .row.tearing .stubl{animation:tearStub .8s cubic-bezier(.3,1.2,.4,1) both}
+  .row.tearing .tt{animation:tearBody .8s ease-out both}
+  .row.tearing .ttl h3{visibility:visible;animation:titleIn .7s cubic-bezier(.2,.9,.25,1) .3s both}
+  .row.tearing .redact{animation:redactOut .5s cubic-bezier(.6,0,.4,1) .2s both}
+  .row.tearing .used{animation:usedIn .35s cubic-bezier(.2,1.6,.4,1) .6s both}
+  @keyframes tearStub{0%{transform:none;clip-path:none}18%{transform:translate(-4px,0) rotate(-1.5deg)}40%{transform:translate(-9px,5px) rotate(-5deg);clip-path:var(--zz-l)}62%{transform:translate(-13px,10px) rotate(-8deg)}100%{transform:translate(-.7rem,.5rem) rotate(-5deg);clip-path:var(--zz-l)}}
+  @keyframes tearBody{0%{transform:none;clip-path:none}22%{transform:translateX(5px);clip-path:none}40%{clip-path:var(--zz-r)}100%{transform:none;clip-path:var(--zz-r)}}
+  @keyframes redactOut{to{transform:translateX(22%) scaleX(.6);opacity:0;clip-path:inset(0 0 0 100%)}}
+  @keyframes titleIn{from{opacity:0;letter-spacing:.2em;transform:translateX(-14px)}to{opacity:1;letter-spacing:.012em;transform:none}}
+  @keyframes usedIn{from{opacity:0;transform:rotate(-7deg) scale(2.2)}to{opacity:.9;transform:rotate(-7deg) scale(1)}}
+}
+@media (max-width:34rem){.code,.used{display:none}.row{--cut:.62rem}.redact{font-size:.6rem;letter-spacing:.22em}.redact::before,.redact::after{display:none}}
 .empty{padding:3rem 0;font:500 .9rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
 .foot{margin-top:5rem;padding-top:1.4rem;border-top:2px solid var(--bone);display:grid;gap:.8rem;max-width:46rem;color:var(--dim);font-size:.92rem}
@@ -188,6 +229,7 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
     <h1><span class="w1">War</span><span class="w2">Films<i>.</i></span></h1>
     <p class="telegram"><span class="sr">Ranked by how closely each film follows what really happened. Names only. No plots. No spoilers. Stop.</span><span id="tg" aria-hidden="true">Ranked by how closely each film follows what really happened. Names only. No plots. No spoilers. Stop.</span></p>
     <div class="ladder" id="ladder" role="group" aria-label="Filter by grade"></div>
+    <div class="tools"><button type="button" id="tearAll">Tear all</button><button type="button" id="sealAll">Seal all</button><p>Every title is sealed. Tap a ticket to tear it and see the name.</p></div>
   </header>
   <main id="list" aria-live="polite"></main>
   <footer class="foot">
@@ -213,6 +255,41 @@ const FILMS=[
 const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let tier='all';
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let TORN=new Set();
+try{TORN=new Set(JSON.parse(localStorage.getItem('yayo-war-torn')||'[]'))}catch(e){}
+const saveTorn=()=>{try{localStorage.setItem('yayo-war-torn',JSON.stringify([...TORN]))}catch(e){}};
+function ticketLabel(f,t,torn){
+  const base=`Ticket ${f.r}, grade ${t.g}, ${t.name}. ${f.e}${f.y?', '+f.y:''}.`;
+  return esc(torn?`${f.t}. ${base}`:`${base} Title hidden. Activate to tear the ticket and reveal it.`);
+}
+function bits(li){
+  if(REDUCED||!li.animate)return;
+  const t=li.querySelector('.stubl'),W=t.offsetWidth,H=li.offsetHeight;
+  for(let k=0;k<9;k++){
+    const b=document.createElement('i');b.className='bit';b.style.left=(W-3)+'px';b.style.top=(Math.random()*H)+'px';
+    if(k%3===0)b.style.background='#e8402f';
+    li.append(b);
+    const dx=-30+Math.random()*90,dy=40+Math.random()*80,r=(Math.random()-.5)*540;
+    b.animate([{opacity:1,transform:'translate(0,0) rotate(0)'},{opacity:1,offset:.6},{opacity:0,transform:`translate(${dx}px,${dy}px) rotate(${r}deg)`}],{duration:700+Math.random()*350,easing:'cubic-bezier(.2,.7,.3,1)',delay:120}).onfinish=()=>b.remove();
+  }
+}
+function tear(li,animate){
+  const r=+li.dataset.r;if(TORN.has(r))return;
+  TORN.add(r);saveTorn();
+  const f=FILMS.find(x=>x.r===r),t=TIERS[f.k],tk=li.querySelector('.ticket');
+  tk.setAttribute('aria-pressed','true');tk.setAttribute('aria-label',ticketLabel(f,t,true).replace(/&amp;/g,'&'));
+  if(animate&&!REDUCED){
+    li.classList.add('tearing');bits(li);
+    try{navigator.vibrate&&navigator.vibrate(16)}catch(e){}
+    setTimeout(()=>{li.classList.add('torn');li.classList.remove('tearing')},900);
+  }else li.classList.add('torn');
+}
+function sealAll(){TORN.clear();saveTorn();render(false)}
+function tearAll(){document.querySelectorAll('.row:not(.torn)').forEach((li,i)=>setTimeout(()=>tear(li,true),i*140))}
+document.addEventListener('click',e=>{const tk=e.target.closest&&e.target.closest('.ticket');if(tk)tear(tk.parentElement,true)});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('ticket')){e.preventDefault();tear(e.target.parentElement,true)}});
+$('tearAll').onclick=tearAll;$('sealAll').onclick=sealAll;
 function pick(val){
   tier=(tier===val&&val!=='all')?'all':val;
   ladder();bar();render(true);
@@ -252,7 +329,7 @@ function render(deal){
     const dim=ti>=3?' dim':'';
     const pips=Array.from({length:5},(_,k)=>`<i class="${k<t.fill?'on':''}"></i>`).join('');
     html+=`<section class="tier" aria-labelledby="h${ti}"><h2 class="band" id="h${ti}"><span class="gl" aria-hidden="true">${t.g}</span><span class="nm">Grade ${t.g}: ${esc(t.name)}</span><span class="bl">${esc(t.blurb)}</span><span class="ct">${rows.length} ${rows.length===1?'film':'films'}</span></h2><ol>`+
-    rows.map(f=>`<li class="row${dim}" style="--i:${n++}"><div class="stubl"><small>No.</small><span class="rk" aria-label="Rank ${f.r}">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><h3>${esc(f.t)}</h3><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p><i class="code" aria-hidden="true"></i></div><div class="stubr" role="img" aria-label="Grade ${t.g}, ${esc(t.name)}"><small>Grade</small><b>${t.g}</b><span class="pips">${pips}</span></div></li>`).join('')+`</ol></section>`;
+    rows.map(f=>{const torn=TORN.has(f.r);return `<li class="row${dim}${torn?' torn':''}" style="--i:${n++}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${ticketLabel(f,t,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="redact" aria-hidden="true">Tear to reveal</span></div><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Admitted</span></div><div class="stubr" aria-hidden="true"><small>Grade</small><b>${t.g}</b><span class="pips">${pips}</span></div></div></li>`}).join('')+`</ol></section>`;
   });
   list.innerHTML=html||'<p class="empty">Nothing here. Pick another grade.</p>';
   clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2600);
