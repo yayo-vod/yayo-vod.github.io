@@ -257,12 +257,12 @@ const BANDS=[
  {name:'Bittersweet',blurb:'Tears, but the gentle kind.',icon:'part',from:20,to:26,s:['#76627c','#4f4568','#fff0e0']},
  {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:27,to:31,s:['#f7ca82','#eaa653','#2b1c0c']}];
 const FILMS=[
- ['One Day',2011,'Romantic drama'], ['Eternal Sunshine of the Spotless Mind',2004,'Sci-fi romance'], ['Finch',2021,'Sci-fi drama'], ['12 Years a Slave',2013,'Historical drama'], ['Meet Joe Black',1998,'Romantic fantasy'], ['A Beautiful Mind',2001,'Biographical drama'],
- ['Saving Mr. Banks',2013,'Biographical drama'], ['Love & Other Drugs',2010,'Romantic dramedy'], ['Passengers',2016,'Sci-fi romance'], ['Source Code',2011,'Sci-fi thriller'], ['Blood Red Sky',2021,'Action thriller'], ['Lost in Translation',2003,'Romantic drama'],
- ['Death Wish',2018,'Action thriller'], ['Oblivion',2013,'Sci-fi action'], ['Extinction',2015,'Sci-fi thriller'], ['Django Unchained',2012,'Western'], ['The Bucket List',2007,'Comedy drama'], ['Sully',2016,'Biographical drama'],
- ['One Battle After Another',2025,'Action thriller'], ['Eagle Eye',2008,'Action thriller'], ['Sleepless in Seattle',1993,'Romantic comedy'], ['The Accountant 2',2025,'Action thriller'], ['Collateral',2004,'Crime thriller'], ['John Carter',2012,'Sci-fi adventure'],
- ['The Martian',2015,'Sci-fi survival'], ['The Pursuit of Happyness',2006,'Biographical drama'], ['The Shawshank Redemption',1994,'Prison drama'], ['Green Book',2018,'Biographical comedy'], ['The Intern',2015,'Comedy drama'], ['You\u2019ve Got Mail',1998,'Romantic comedy'],
- ['Yes Man',2008,'Comedy']
+ ['One Day',2011,'Drama, Romance'], ['Eternal Sunshine of the Spotless Mind',2004,'Drama, Romance, Sci-Fi'], ['Finch',2021,'Drama, Sci-Fi'], ['12 Years a Slave',2013,'Biography, Drama, History'], ['Meet Joe Black',1998,'Drama, Fantasy, Romance'], ['A Beautiful Mind',2001,'Biography, Drama'],
+ ['Saving Mr. Banks',2013,'Biography, Comedy, Drama'], ['Love & Other Drugs',2010,'Comedy, Drama, Romance'], ['Passengers',2016,'Drama, Romance, Sci-Fi'], ['Source Code',2011,'Mystery, Sci-Fi, Thriller'], ['Blood Red Sky',2021,'Action, Horror, Thriller'], ['Lost in Translation',2003,'Comedy, Drama, Romance'],
+ ['Death Wish',2018,'Action, Crime, Drama'], ['Oblivion',2013,'Action, Adventure, Mystery'], ['Extinction',2015,'Drama, Horror, Sci-Fi'], ['Django Unchained',2012,'Drama, Western'], ['The Bucket List',2007,'Adventure, Comedy, Drama'], ['Sully',2016,'Biography, Drama'],
+ ['One Battle After Another',2025,'Action, Crime, Drama'], ['Eagle Eye',2008,'Action, Mystery, Thriller'], ['Sleepless in Seattle',1993,'Comedy, Drama, Romance'], ['The Accountant 2',2025,'Action, Crime, Thriller'], ['Collateral',2004,'Crime, Drama, Thriller'], ['John Carter',2012,'Action, Adventure, Fantasy'],
+ ['The Martian',2015,'Adventure, Drama, Sci-Fi'], ['The Pursuit of Happyness',2006,'Biography, Drama'], ['The Shawshank Redemption',1994,'Crime, Drama'], ['Green Book',2018,'Biography, Comedy, Drama'], ['The Intern',2015,'Comedy, Drama'], ['You\u2019ve Got Mail',1998,'Comedy, Drama, Romance'],
+ ['Yes Man',2008,'Comedy, Romance']
 ].map(([t,y,k],i)=>({t,y,k:k||'Film',r:i+1,b:BANDS.findIndex(b=>i+1>=b.from&&i+1<=b.to)}));
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
