@@ -6,6 +6,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0e09">
 <title>War Films Ranked</title>
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=Saira+Stencil+One&family=Special+Elite&display=swap">
@@ -55,8 +56,10 @@ h1{font:400 clamp(5.2rem,25vw,19rem)/.8 var(--stencil);text-transform:uppercase;
 h1 .w1{color:var(--bone)}
 h1 .w2{color:transparent;-webkit-text-stroke:clamp(1.5px,.5vw,4px) var(--bone);margin-top:.04em}
 h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
-.telegram{margin-top:clamp(1.6rem,4vw,2.6rem);max-width:44rem;font:400 clamp(1rem,2.5vw,1.4rem)/1.5 var(--type);color:var(--brass);text-transform:uppercase;letter-spacing:.04em}
-.telegram::after{content:"";display:inline-block;width:.6em;height:1.05em;margin-left:.3em;vertical-align:-.15em;background:var(--brass);animation:blink 1s steps(2) infinite}
+.telegram{margin-top:clamp(1.6rem,4vw,2.6rem);max-width:44rem;font:400 clamp(1rem,2.5vw,1.4rem)/1.55 var(--type);color:var(--brass);text-transform:uppercase;letter-spacing:.04em;min-height:4.7em}
+.js .telegram #tg:not(.ready){visibility:hidden}
+.ch{visibility:hidden}.ch.on{visibility:visible}
+.cur{display:inline-block;width:.58em;height:1.05em;margin-left:.04em;vertical-align:-.17em;background:var(--brass);animation:blink 1s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
 .seal{position:absolute;right:0;top:clamp(1rem,4vw,3rem);width:clamp(6.5rem,17vw,12.5rem);color:var(--poppy);transform:rotate(-12deg);opacity:.92}
 .seal svg{display:block;width:100%;height:auto;animation:spin 60s linear infinite}
@@ -75,11 +78,6 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 .rung[aria-pressed="true"] .c{color:#4a4d3b}
 .rung.all .l{color:var(--bone);font-size:2.2rem;padding-top:.25rem}
 .rung.all[aria-pressed="true"] .l{color:var(--ink)}
-.find{display:flex;align-items:end;gap:1.2rem;flex-wrap:wrap;margin-top:1.6rem}
-.find label{font:600 .72rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
-.find input{all:unset;box-sizing:border-box;flex:1 1 16rem;max-width:30rem;font:500 1.15rem/1 var(--mono);letter-spacing:.06em;color:var(--bone);padding:.7rem 0;border-bottom:2px solid var(--bone);caret-color:var(--poppy)}
-.find input::placeholder{color:var(--dim)}
-.find input:focus-visible{border-bottom-color:var(--brass);outline:none;box-shadow:0 2px 0 var(--brass)}
 
 /* tiers + rows */
 .tier{margin-top:clamp(2.5rem,7vw,4.5rem)}
@@ -88,23 +86,34 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
 .band .nm{font:800 clamp(1.3rem,3.6vw,2rem)/1 var(--cond);text-transform:uppercase;letter-spacing:.07em}
 .band .bl{font:400 .95rem/1.3 var(--body);color:var(--dim);flex:1 1 14rem}
 .band .ct{font:500 .72rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-.row{position:relative;display:grid;grid-template-columns:clamp(3.3rem,10vw,7.5rem) minmax(0,1fr) auto;align-items:center;gap:0 clamp(.8rem,3vw,2rem);padding:clamp(1rem,2.6vw,1.7rem) 0;border-bottom:1px solid var(--faint)}
-.row::before{content:"";position:absolute;inset:0 -18px;background:linear-gradient(90deg,rgba(232,64,47,.2),rgba(232,64,47,0) 70%);opacity:0;transition:opacity .25s;pointer-events:none}
-.row:hover::before{opacity:1}
-.rk{font:900 clamp(2.8rem,8.5vw,6rem)/.9 var(--cond);color:transparent;-webkit-text-stroke:1.4px var(--dim);font-variant-numeric:tabular-nums;letter-spacing:.01em;transition:color .25s,-webkit-text-stroke-color .25s}
-.row:hover .rk{color:var(--poppy);-webkit-text-stroke-color:var(--poppy)}
-.tt{min-width:0;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
-.row:hover .tt{transform:translateX(.7rem)}
-.tt h3{font:800 clamp(2rem,6.4vw,4.6rem)/.93 var(--cond);text-transform:uppercase;letter-spacing:.012em;overflow-wrap:anywhere;text-wrap:balance}
-.meta{display:flex;flex-wrap:wrap;gap:.2rem 1rem;margin-top:.55rem;font:500 .76rem/1.2 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+/* each film is a ticket: bone stub with the rank, olive-black body with the title, red stub with the grade stamp */
+.tier ol{display:grid;gap:clamp(.9rem,2.4vw,1.5rem);margin-top:clamp(1rem,3vw,1.6rem)}
+.row{--sl:clamp(4.2rem,11vw,7rem);--sr:clamp(5rem,13vw,8.5rem);--cut:.82rem;position:relative;display:grid;grid-template-columns:var(--sl) minmax(0,1fr) var(--sr);min-height:clamp(6.6rem,17vw,9.6rem);color:var(--bone);background:#141a0f;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s;
+  -webkit-mask:radial-gradient(circle var(--cut) at var(--sl) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at var(--sl) 100%,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 100%,#0000 97%,#000);
+  -webkit-mask-composite:source-in,source-in,source-in;
+  mask:radial-gradient(circle var(--cut) at var(--sl) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at var(--sl) 100%,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 0,#0000 97%,#000),radial-gradient(circle var(--cut) at calc(100% - var(--sr)) 100%,#0000 97%,#000);
+  mask-composite:intersect}
+.row:hover{transform:translateY(-5px) rotate(-.25deg)}
+.stubl{display:grid;place-items:center;align-content:center;gap:.35rem;background:var(--bone);color:var(--ink);border-right:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem}
+.stubl small{font:600 .56rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;opacity:.7}
+.rk{font:400 clamp(2.2rem,7vw,3.8rem)/1 var(--stencil);font-variant-numeric:tabular-nums}
+.tt{min-width:0;position:relative;display:grid;align-content:center;gap:.5rem;padding:.9rem clamp(.9rem,3vw,1.8rem);overflow:hidden;
+  background:radial-gradient(80% 140% at 100% 100%,rgba(255,240,190,.07),transparent 60%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.012) 3px 4px)}
+.tt::before{content:"";position:absolute;inset:.45rem;border:1px dashed rgba(236,233,219,.16);pointer-events:none}
+.tt h3{font:800 clamp(1.7rem,5.4vw,3.9rem)/.95 var(--cond);text-transform:uppercase;letter-spacing:.012em;overflow-wrap:anywhere;text-wrap:balance;transition:color .25s}
+.row:hover .tt h3{color:#fff}
+.meta{display:flex;flex-wrap:wrap;gap:.2rem 1rem;font:500 .72rem/1.2 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
 .meta span+span::before{content:"/";margin-right:1rem;color:var(--poppy)}
-.gr{display:grid;justify-items:center;gap:.5rem}
-.gr b{display:grid;place-items:center;width:clamp(3rem,8vw,4.4rem);aspect-ratio:1;border:3px solid currentColor;outline:1px solid currentColor;outline-offset:3px;font:400 clamp(1.7rem,5vw,2.6rem)/1 var(--stencil);color:var(--poppy);transform:rotate(-6deg)}
-.gr.dim b{color:var(--dim)}
-.gr .pips{display:flex;gap:3px}
-.gr .pips i{display:block;width:.55rem;height:.3rem;background:var(--faint)}
-.gr .pips i.on{background:var(--poppy)}
-.gr.dim .pips i.on{background:var(--dim)}
+.code{position:absolute;right:clamp(.9rem,3vw,1.8rem);bottom:.9rem;width:clamp(4rem,10vw,6.5rem);height:1rem;opacity:.35;background:repeating-linear-gradient(90deg,var(--bone) 0 2px,transparent 2px 4px,var(--bone) 4px 5px,transparent 5px 8px,var(--bone) 8px 11px,transparent 11px 13px)}
+.stubr{display:grid;place-items:center;align-content:center;gap:.5rem;background:var(--poppy);color:var(--ink);border-left:2px dashed rgba(10,13,8,.55);padding:.6rem .3rem}
+.stubr small{font:600 .56rem/1 var(--mono);letter-spacing:.24em;text-transform:uppercase}
+.stubr b{font:400 clamp(2.4rem,8vw,4rem)/1 var(--stencil);transform:rotate(-6deg)}
+.stubr .pips{display:flex;gap:3px}
+.stubr .pips i{display:block;width:.5rem;height:.3rem;background:rgba(10,13,8,.25)}
+.stubr .pips i.on{background:var(--ink)}
+.row.dim .stubr{background:#8d9079}
+@media (max-width:34rem){.code{display:none}.row{--cut:.62rem}}
 .empty{padding:3rem 0;font:500 .9rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
 .foot{margin-top:5rem;padding-top:1.4rem;border-top:2px solid var(--bone);display:grid;gap:.8rem;max-width:46rem;color:var(--dim);font-size:.92rem}
@@ -115,14 +124,12 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
   .ladder{grid-template-columns:repeat(2,1fr)}
 }
 @media (prefers-reduced-motion:no-preference){
-  .hero .kicker,.hero h1 .w1,.hero h1 .w2,.ladder,.find{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+  .hero .kicker,.hero h1 .w1,.hero h1 .w2,.ladder{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
   .hero h1 .w1{animation-delay:.08s}.hero h1 .w2{animation-delay:.2s}
-  .telegram{animation:type 2.6s steps(60) .7s both}
-  .ladder{animation-delay:.9s}.find{animation-delay:1.05s}
+  .ladder{animation-delay:.9s}
   @keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
-  @keyframes type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 }
-@media (prefers-reduced-motion:reduce){.beam,.grain,.seal svg,.telegram::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.beam,.grain,.seal svg,.cur{animation:none}}
 </style>
 </head>
 <body>
@@ -141,9 +148,8 @@ h1 i{font-style:normal;color:var(--poppy);-webkit-text-stroke:0}
     </div>
     <p class="kicker">Accuracy audit</p>
     <h1><span class="w1">War</span><span class="w2">Films<i>.</i></span></h1>
-    <p class="telegram">Ranked by how closely each film follows what really happened. Names only. No plots. No spoilers. Stop.</p>
+    <p class="telegram"><span class="sr">Ranked by how closely each film follows what really happened. Names only. No plots. No spoilers. Stop.</span><span id="tg" aria-hidden="true">Ranked by how closely each film follows what really happened. Names only. No plots. No spoilers. Stop.</span></p>
     <div class="ladder" id="ladder" role="group" aria-label="Filter by grade"></div>
-    <div class="find"><label for="q">Find a title</label><input id="q" type="search" placeholder="Type a name" autocomplete="off" spellcheck="false"></div>
   </header>
   <main id="list" aria-live="polite"></main>
   <footer class="foot">
@@ -167,7 +173,7 @@ const FILMS=[
  ['Overlord',2018,'WWII',4],['Ghosts of War',2020,'WWII',4],['The Lair',2022,'Afghanistan',4],['Trench 11',null,'WWI',4],['Edge of Tomorrow',2014,'Near future',4],['The Tomorrow War',2021,'Near future',4]
 ].map(([t,y,e,k],i)=>({t,y,e,k,r:i+1}));
 const $=id=>document.getElementById(id), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let tier='all', q='';
+let tier='all';
 function ladder(){
   const el=$('ladder'); el.innerHTML='';
   const mk=(cls,l,n,c,val)=>{const b=document.createElement('button');b.type='button';b.className='rung '+cls;b.setAttribute('aria-pressed',String(tier===val));b.dataset.v=val;
@@ -180,16 +186,33 @@ function render(){
   let html='';
   TIERS.forEach((t,ti)=>{
     if(tier!=='all'&&tier!==ti)return;
-    const rows=FILMS.filter(f=>f.k===ti&&f.t.toLowerCase().includes(q)); if(!rows.length)return;
+    const rows=FILMS.filter(f=>f.k===ti); if(!rows.length)return;
     const dim=ti>=3?' dim':'';
     const pips=Array.from({length:5},(_,k)=>`<i class="${k<t.fill?'on':''}"></i>`).join('');
     html+=`<section class="tier" aria-labelledby="h${ti}"><h2 class="band" id="h${ti}"><span class="gl" aria-hidden="true">${t.g}</span><span class="nm">Grade ${t.g}: ${esc(t.name)}</span><span class="bl">${esc(t.blurb)}</span><span class="ct">${rows.length} ${rows.length===1?'film':'films'}</span></h2><ol>`+
-    rows.map(f=>`<li class="row"><span class="rk" aria-label="Rank ${f.r}">${String(f.r).padStart(2,'0')}</span><div class="tt"><h3>${esc(f.t)}</h3><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p></div><div class="gr${dim}" role="img" aria-label="Grade ${t.g}, ${esc(t.name)}"><b>${t.g}</b><span class="pips">${pips}</span></div></li>`).join('')+`</ol></section>`;
+    rows.map(f=>`<li class="row${dim}"><div class="stubl"><small>No.</small><span class="rk" aria-label="Rank ${f.r}">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><h3>${esc(f.t)}</h3><p class="meta"><span>${esc(f.e)}</span>${f.y?`<span>${f.y}</span>`:''}</p><i class="code" aria-hidden="true"></i></div><div class="stubr" role="img" aria-label="Grade ${t.g}, ${esc(t.name)}"><small>Grade</small><b>${t.g}</b><span class="pips">${pips}</span></div></li>`).join('')+`</ol></section>`;
   });
-  $('list').innerHTML=html||'<p class="empty">No title matches. Clear the search or pick another grade.</p>';
+  $('list').innerHTML=html||'<p class="empty">Nothing here. Pick another grade.</p>';
 }
-$('q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render()});
 ladder();render();
+
+(function(){
+  const el=document.getElementById('tg'); if(!el) return;
+  const txt=el.textContent.trim();
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.classList.add('ready');return;}
+  el.textContent='';
+  const spans=[...txt].map(ch=>{const s=document.createElement('span');s.className='ch';s.textContent=ch;el.append(s);return s});
+  const cur=document.createElement('span');cur.className='cur';el.append(cur);
+  el.classList.add('ready');
+  let i=0;
+  function tick(){
+    if(i>=spans.length){el.append(cur);return;}
+    spans[i].classList.add('on'); i++;
+    if(i<spans.length) spans[i].before(cur); else el.append(cur);
+    const c=txt[i-1]; setTimeout(tick, c==='.'?380:c===' '?42:26+Math.random()*34);
+  }
+  setTimeout(tick,900);
+})();
 </script>
 </body>
 </html>

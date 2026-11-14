@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&family=Limelight&family=Saira+Stencil+One&display=swap">
 <style>
-/* LOBBY: a theatre marquee with chasing bulbs over a dark foyer; every list is a ticket dressed in that list's own look. */
+/* LOBBY: a theatre marquee with chasing bulbs over a dark foyer; each list is a one-sheet poster. */
 :root{--bg:#0d090a;--cream:#f3e9d2;--dim:#a79c88;--brass:#e7b85a;--wine:#4a0f1c;--faint:rgba(243,233,210,.14);
   --display:"Limelight","Playfair Display",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--body:"IBM Plex Sans",system-ui,sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
@@ -37,27 +37,28 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
 
 .now{display:flex;align-items:center;gap:1.2rem;margin:clamp(3rem,8vw,5rem) 0 1.6rem;font:600 .8rem/1 var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--brass)}
 .now::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--brass),transparent)}
-.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1.6rem}
+.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),20rem));gap:2rem;justify-content:start}
 
-.ticket{--stub:5.6rem;position:relative;display:grid;grid-template-columns:var(--stub) 1fr;text-decoration:none;color:var(--t-ink);background:var(--t-bg);min-height:11rem;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.ticket:hover{transform:translateY(-6px) rotate(-.6deg)}
-.ticket::before,.ticket::after{content:"";position:absolute;left:var(--stub);width:1.7rem;height:1.7rem;border-radius:50%;background:var(--bg);transform:translateX(-50%);z-index:2}
-.ticket::before{top:-.85rem}.ticket::after{bottom:-.85rem}
-.stub{display:grid;place-items:center;align-content:center;gap:.6rem;background:var(--t-accent);color:var(--t-stub-ink);border-right:2px dashed rgba(0,0,0,.45);padding:1rem .4rem}
-.stub span{font:600 .62rem/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg)}
-.stub b{font:400 2.8rem/1 var(--t-display)}
-.main{display:grid;align-content:center;gap:.7rem;padding:1.5rem 1.6rem 1.5rem 1.9rem;min-width:0;position:relative;overflow:hidden}
-.main .g{font:600 .74rem/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--t-accent-text)}
-.main h2{font:400 clamp(2.4rem,7vw,3.4rem)/.9 var(--t-display);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
-.main p{font:500 .76rem/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.75}
-.main .go{margin-top:.4rem;font:600 .78rem/1 var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--t-accent-text);display:flex;align-items:center;gap:.7rem}
-.main .go i{display:block;height:2px;width:2.2rem;background:currentColor;transition:width .3s}
-.ticket:hover .go i{width:4rem}
-.ticket.war{--t-bg:#12170d;--t-ink:#ece9db;--t-accent:#e8402f;--t-accent-text:#f07262;--t-stub-ink:#12170d;--t-display:"Saira Stencil One",Impact,sans-serif}
-.ticket.war .main::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 120% at 100% 100%,rgba(255,240,190,.12),transparent 60%);pointer-events:none}
+/* lists are one-sheet posters: portrait, one big genre word, dressed in that list's own palette. (Single films get tickets inside each list.) */
+.poster{position:relative;display:grid;grid-template-rows:auto 1fr auto;aspect-ratio:3/4;min-height:26rem;padding:1.4rem 1.4rem 1.5rem;text-decoration:none;color:var(--p-ink);background:var(--p-bg);overflow:hidden;isolation:isolate;container-type:inline-size;filter:drop-shadow(0 22px 30px rgba(0,0,0,.6));transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.poster::before{content:"";position:absolute;inset:.7rem;border:1.5px solid var(--p-line);z-index:2;pointer-events:none}
+.poster::after{content:"";position:absolute;inset:0;z-index:0;background:conic-gradient(from 0deg at 0% 100%,transparent 0 48deg,rgba(255,240,190,.05) 54deg,rgba(255,240,190,.16) 60deg,rgba(255,240,190,.05) 66deg,transparent 72deg 360deg);transform-origin:0 100%;transform:rotate(-10deg);transition:transform 1.2s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.poster:hover{transform:translateY(-8px)}
+.poster:hover::after{transform:rotate(8deg)}
+.poster>*{position:relative;z-index:1}
+.p-top{display:flex;justify-content:space-between;gap:1rem;font:600 .68rem/1 var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--p-accent-text);padding:.5rem .6rem 0}
+.p-word{align-self:center;font:400 39cqw/.8 var(--p-display);text-transform:uppercase;letter-spacing:-.015em;white-space:nowrap;padding-inline:.4rem;color:var(--p-ink);text-shadow:0 .04em 0 rgba(0,0,0,.35)}
+.p-word i{font-style:normal;color:var(--p-accent)}
+.p-bottom{display:grid;gap:.55rem;padding:0 .6rem .4rem}
+.p-bottom h2{font:800 1.6rem/1 var(--p-cond);text-transform:uppercase;letter-spacing:.04em}
+.p-bottom p{font:500 .72rem/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;opacity:.75}
+.p-go{margin-top:.4rem;display:flex;align-items:center;gap:.7rem;font:600 .74rem/1 var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--p-accent-text)}
+.p-go i{display:block;height:2px;width:2.2rem;background:currentColor;transition:width .3s}
+.poster:hover .p-go i{width:4.5rem}
+.poster.war{--p-bg:#10150b;--p-ink:#ece9db;--p-line:rgba(236,233,219,.28);--p-accent:#e8402f;--p-accent-text:#f07262;--p-display:"Saira Stencil One",Impact,sans-serif;--p-cond:"Big Shoulders Display",Impact,sans-serif}
+.grainp{position:absolute;inset:-50%;width:200%;height:200%;z-index:0;opacity:.1;mix-blend-mode:screen;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .foot{margin-top:5rem;max-width:40rem;color:var(--dim);font-size:.95rem;padding-top:1.2rem;border-top:1px solid var(--faint)}
 
-@media (max-width:34rem){.ticket{--stub:4.4rem}.stub b{font-size:2.2rem}.main{padding:1.3rem 1.2rem 1.3rem 1.5rem}}
 @media (prefers-reduced-motion:no-preference){
   .bulbs.o{animation:chase 1.2s steps(1) infinite}
   .bulbs.a{animation:chase2 1.2s steps(1) infinite}
@@ -84,19 +85,20 @@ h1{font:400 clamp(3.6rem,17vw,10.5rem)/.92 var(--display);margin:1.2rem 0 1rem;c
     <p class="promise">Hand-picked movie lists, one look per genre. Names only. No plots, no spoilers.</p>
   </header>
 
-  <h2 class="now">Now showing</h2>
+  <h2 class="now">The lists</h2>
   <ul class="tickets">
-    <li><a class="ticket war" href="war/">
-      <div class="stub"><span>List</span><b>01</b></div>
-      <div class="main">
-        <span class="g">War</span>
+    <li><a class="poster war" href="war/">
+      <i class="grainp" aria-hidden="true"></i>
+      <div class="p-top"><span>List 01</span><span>21 films</span></div>
+      <div class="p-word" aria-hidden="true">War<i>.</i></div>
+      <div class="p-bottom">
         <h2>War films, most reliable first</h2>
-        <p>21 films &middot; graded A to E</p>
-        <span class="go">Admit one <i></i></span>
+        <p>Graded A to E &middot; no spoilers</p>
+        <span class="p-go">Open the list <i></i></span>
       </div></a></li>
   </ul>
 
-  <p class="foot">New lists land here as tickets, each with its own design. Open one, filter by grade, and pick your night.</p>
+  <p class="foot">Every list is a poster with its own look. Inside, each film is a ticket. Open one and pick your night.</p>
 </div>
 </body>
 </html>
