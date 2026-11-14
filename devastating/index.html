@@ -30,13 +30,31 @@ h1,h2,h3,p,ol,ul{margin:0;padding:0}ol,ul{list-style:none}a{color:inherit}
 :focus-visible{outline:3px solid var(--amber);outline-offset:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* the window */
-.glass{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 110%,#16253d 0%,var(--night) 60%)}
-.bokeh{position:absolute;border-radius:50%;filter:blur(38px);opacity:.55;animation:drift 22s ease-in-out infinite alternate}
-.b1{width:34vmax;height:34vmax;left:-8vmax;bottom:-10vmax;background:radial-gradient(circle,rgba(244,180,104,.5),transparent 68%)}
-.b2{width:26vmax;height:26vmax;right:-6vmax;bottom:6vmax;background:radial-gradient(circle,rgba(110,170,255,.38),transparent 68%);animation-duration:28s;animation-direction:alternate-reverse}
-.b3{width:18vmax;height:18vmax;left:38%;bottom:-6vmax;background:radial-gradient(circle,rgba(217,138,155,.32),transparent 68%);animation-duration:19s}
+/* the window: five skies crossfade as you scroll, from a storm down to a sunrise */
+.glass{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;background:#05080e}
+.sky{position:absolute;inset:0;overflow:hidden}
+.s0{opacity:var(--w0,1);background:linear-gradient(180deg,#03060a 0%,#08101b 55%,#0e1a2b 100%)}
+.s1{opacity:var(--w1,0);background:radial-gradient(120% 80% at 50% 110%,#16253d 0%,#070c14 62%)}
+.s2{opacity:var(--w2,0);background:linear-gradient(180deg,#0b1424 0%,#1a2c4a 62%,#2b4468 100%)}
+.s3{opacity:var(--w3,0);background:linear-gradient(180deg,#171d33 0%,#3a3a5c 52%,#8c6a73 82%,#d79468 100%)}
+.s4{opacity:var(--w4,0);background:linear-gradient(180deg,#14284c 0%,#2c5688 38%,#a98390 70%,#f1b273 100%)}
+.bk{position:absolute;border-radius:50%;filter:blur(40px);animation:drift 24s ease-in-out infinite alternate}
+.cloud{position:absolute;border-radius:50%;filter:blur(70px);background:rgba(70,90,115,.55);animation:drift 30s ease-in-out infinite alternate}
+.s0 .c1{width:70vmax;height:26vmax;left:-14vmax;top:-12vmax}.s0 .c2{width:60vmax;height:24vmax;right:-16vmax;top:-8vmax;animation-direction:alternate-reverse;background:rgba(55,72,96,.6)}
+.s0 .bk{width:20vmax;height:20vmax;left:-6vmax;bottom:-8vmax;background:radial-gradient(circle,rgba(244,180,104,.28),transparent 68%)}
+.s1 .b1{width:34vmax;height:34vmax;left:-8vmax;bottom:-10vmax;background:radial-gradient(circle,rgba(244,180,104,.5),transparent 68%);opacity:.55}
+.s1 .b2{width:26vmax;height:26vmax;right:-6vmax;bottom:6vmax;background:radial-gradient(circle,rgba(110,170,255,.38),transparent 68%);opacity:.55;animation-duration:28s;animation-direction:alternate-reverse}
+.s1 .b3{width:18vmax;height:18vmax;left:38%;bottom:-6vmax;background:radial-gradient(circle,rgba(217,138,155,.32),transparent 68%);opacity:.55;animation-duration:19s}
+.s2 .b1{width:30vmax;height:30vmax;right:-8vmax;bottom:-8vmax;background:radial-gradient(circle,rgba(130,185,255,.4),transparent 68%)}
+.s2 .b2{width:24vmax;height:24vmax;left:-6vmax;bottom:4vmax;background:radial-gradient(circle,rgba(190,170,240,.3),transparent 68%);animation-direction:alternate-reverse}
+.s3 .b1{width:46vmax;height:30vmax;left:20%;bottom:-14vmax;background:radial-gradient(circle,rgba(255,196,120,.55),transparent 68%)}
+.s3 .b2{width:28vmax;height:28vmax;left:-8vmax;top:10vmax;background:radial-gradient(circle,rgba(220,150,180,.28),transparent 68%);animation-direction:alternate-reverse}
+.s4 .sun{position:absolute;inset:0;background:radial-gradient(55% 42% at 50% 104%,rgba(255,236,170,.95),rgba(246,190,110,.55) 38%,transparent 72%)}
+.s4 .rays{position:absolute;left:-50%;right:-50%;top:-20%;bottom:-70%;background:repeating-conic-gradient(from -50deg at 50% 100%,rgba(255,236,180,.16) 0 3deg,transparent 3deg 9deg);-webkit-mask-image:radial-gradient(60% 70% at 50% 100%,#000,transparent 75%);mask-image:radial-gradient(60% 70% at 50% 100%,#000,transparent 75%);transform-origin:50% 100%;animation:sway 26s ease-in-out infinite alternate}
+.s4 .b1{width:30vmax;height:30vmax;right:-6vmax;top:6vmax;background:radial-gradient(circle,rgba(255,220,160,.35),transparent 68%)}
 @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(4vmax,-3vmax) scale(1.12)}}
+@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+#flash{position:fixed;inset:0;z-index:2;pointer-events:none;background:rgba(190,215,255,1);opacity:0;mix-blend-mode:screen}
 canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
 .vig{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(120% 90% at 50% 40%,transparent 45%,rgba(2,5,10,.7) 100%)}
 .page{position:relative;z-index:3;max-width:72rem;margin-inline:auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 6rem max(18px,env(safe-area-inset-left,0px))}
@@ -60,15 +78,15 @@ h1 .l2{font:400 clamp(3.5rem,15.6vw,13.5rem)/.88 var(--serif);letter-spacing:-.0
 .lvl{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:.5rem;padding:1rem 1.05rem 1.1rem;border:1px solid var(--faint);border-radius:14px;background:rgba(14,23,38,.55);position:relative;transition:background .25s,border-color .25s,transform .25s}
 .lvl:hover{border-color:rgba(220,230,242,.4);transform:translateY(-2px)}
 .lvl:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-.lvl .dr{display:flex;gap:.28rem}
+.ic{display:inline-grid;width:1.9rem;height:1.9rem;color:var(--ic,#9db8e6)}
+.ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.lv0{--ic:#9bb7e6}.lv1{--ic:#8fbaf5}.lv2{--ic:#a8c8f0}.lv3{--ic:#f0bfa4}.lv4{--ic:#f6c274}
 .lvl .n{font:400 1.45rem/1 var(--serif)}
 .lvl .c{font:500 .66rem/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .lvl[aria-pressed="true"]{background:var(--mist);color:var(--night);border-color:var(--mist)}
 .lvl[aria-pressed="true"] .c{color:#4a5b73}
+.lvl[aria-pressed="true"] .ic{color:#24477a}
 .lvl.all .n{font-size:1.9rem}
-.dr svg{width:.78rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:1.1;opacity:.45}
-.dr svg.on{fill:var(--drop);stroke:var(--drop);opacity:1;filter:drop-shadow(0 0 5px rgba(130,185,255,.6))}
-.lvl[aria-pressed="true"] .dr svg.on{fill:#2f6fc4;stroke:#2f6fc4;filter:none}
 .tools{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;margin-top:1.3rem}
 .tools button{all:unset;box-sizing:border-box;cursor:pointer;padding:.65rem 1rem;border:1px solid var(--faint);border-radius:999px;font:500 .7rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;background:rgba(14,23,38,.55)}
 .tools button:hover{border-color:rgba(220,230,242,.5)}
@@ -80,7 +98,7 @@ h1 .l2{font:400 clamp(3.5rem,15.6vw,13.5rem)/.88 var(--serif);letter-spacing:-.0
 .band{position:sticky;top:var(--bar,0px);z-index:4;display:flex;align-items:center;flex-wrap:wrap;gap:.6rem 1.4rem;padding:.9rem 0;background:linear-gradient(180deg,rgba(7,12,20,.92) 70%,rgba(7,12,20,0));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 html:not(.barOn) .band{padding-top:max(.9rem,env(safe-area-inset-top,0px))}
 html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
-.band .dr svg{width:.9rem;height:1.2rem}
+.band .ic{width:2.1rem;height:2.1rem}
 .band .nm{font:400 clamp(1.9rem,5vw,3rem)/1 var(--serif)}
 .band .bl{font:italic 400 1.1rem/1.3 var(--serif);color:var(--dim);flex:1 1 14rem}
 .band .ct{font:500 .68rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
@@ -119,12 +137,11 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 .meta span+span::before{content:"\00b7";margin-right:1rem;color:var(--amber)}
 .code{position:absolute;right:clamp(.9rem,3vw,1.8rem);bottom:.9rem;width:clamp(4rem,10vw,6.5rem);height:1rem;opacity:.3;background:repeating-linear-gradient(90deg,var(--mist) 0 2px,transparent 2px 4px,var(--mist) 4px 5px,transparent 5px 8px,var(--mist) 8px 11px,transparent 11px 13px)}
 .used{position:absolute;right:clamp(.9rem,3vw,1.8rem);bottom:.7rem;opacity:0;font:italic 400 clamp(1rem,2.6vw,1.4rem)/1 var(--serif);color:var(--amber);border:1.5px solid var(--amber);border-radius:999px;padding:.25rem .8rem;transform:rotate(-6deg);pointer-events:none;text-shadow:0 0 14px rgba(244,180,104,.5)}
-.stubr{display:grid;place-items:center;align-content:center;gap:.55rem;background:#16264a;background:linear-gradient(180deg,#1b2f58,#12203c);color:var(--mist);border-left:2px dashed rgba(220,230,242,.35);padding:.6rem .3rem;text-align:center;
+.stubr{display:grid;place-items:center;align-content:center;gap:.5rem;background:linear-gradient(180deg,var(--s1,#1b2f58),var(--s2,#12203c));color:var(--sx,var(--mist));border-left:2px dashed rgba(220,230,242,.35);padding:.6rem .3rem;text-align:center;
   -webkit-mask:radial-gradient(circle var(--cut) at 0 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 0 100%,#0000 97%,#000);-webkit-mask-composite:source-in;
   mask:radial-gradient(circle var(--cut) at 0 0,#0000 97%,#000),radial-gradient(circle var(--cut) at 0 100%,#0000 97%,#000);mask-composite:intersect}
 .stubr small{font:500 .54rem/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;opacity:.7}
-.stubr .dr{display:flex;flex-wrap:nowrap;justify-content:center;gap:.2rem}
-.stubr .dr svg{width:.74rem;height:1rem}
+.stubr .ic{width:1.9rem;height:1.9rem;color:inherit}
 .stubr b{font:italic 400 clamp(1rem,2.6vw,1.35rem)/1.05 var(--serif)}
 
 .row:not(.torn) .ticket:hover .stubl{transform:translate(-3px,1px) rotate(-1.4deg)}
@@ -156,22 +173,20 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 #surge::before{content:"";position:absolute;inset:0;background:radial-gradient(closest-side,rgba(7,12,20,.7),rgba(7,12,20,.25) 85%)}
 #surge div{position:relative;display:grid;gap:.9rem;justify-items:center;animation:surgeIn 1.5s cubic-bezier(.2,.8,.2,1) both}
 #surge b{font:italic 400 clamp(3.6rem,15vw,10rem)/.95 var(--serif);color:var(--mist);text-shadow:0 0 50px rgba(130,185,255,.55)}
-#surge .dr{display:flex;gap:.45rem;color:var(--drop)}
-#surge .dr svg{width:1.2rem;height:1.6rem}
+#surge .ic{width:3.2rem;height:3.2rem}
 #surge span{font:500 .8rem/1 var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--dim)}
 @keyframes surgeWrap{0%{opacity:0}14%,64%{opacity:1}100%{opacity:0}}
 @keyframes surgeIn{0%{filter:blur(18px);transform:scale(1.08);opacity:0}22%{filter:blur(0);transform:none;opacity:1}100%{filter:blur(0);transform:scale(.98)}}
 @media (prefers-reduced-motion:reduce){#surge{display:none}}
 
 .empty{padding:3rem 0;font:italic 400 1.3rem/1.4 var(--serif);color:var(--dim)}
-.foot{margin-top:5rem;padding-top:1.4rem;border-top:1px solid var(--faint);display:grid;gap:.7rem;max-width:44rem;color:var(--dim);font-size:.95rem}
+.foot{margin-top:5rem;padding:1.4rem 1.5rem;background:rgba(7,12,20,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--faint);border-radius:16px;display:grid;gap:.7rem;max-width:44rem;color:#aebed3;font-size:.95rem}
 .foot b{font:italic 400 1.5rem/1 var(--serif);color:var(--mist)}
 
 @media (max-width:34rem){
   .row{--cut:.62rem}.fog{font-size:.95rem;gap:.4rem}.code{width:3.2rem;right:.75rem;bottom:.7rem}
   .used{font-size:1rem;right:.7rem;bottom:.55rem;padding:.15rem .6rem}.tt{padding-bottom:2.4rem}.scale{grid-template-columns:repeat(2,1fr)}
-  .stubr .dr{gap:.12rem}.stubr .dr svg{width:.58rem;height:.82rem}
-}
+  }
 @media (prefers-reduced-motion:no-preference){
   html.ready .kicker,html.ready .tools,html.ready .scale{animation:fadeIn .9s ease both}
   html.ready h1 .l1{animation:fadeIn 1s ease .05s both}html.ready h1 .l2{animation:fadeIn 1.4s ease .25s both}
@@ -196,38 +211,51 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   @keyframes usedIn{from{opacity:0;transform:rotate(-6deg) scale(1.9)}to{opacity:.95;transform:rotate(-6deg) scale(1)}}
   @keyframes codeOut{from{opacity:.3;clip-path:inset(0 0 0 0)}to{opacity:0;clip-path:inset(0 0 0 100%)}}
 }
-@media (prefers-reduced-motion:reduce){.bokeh,.tear{animation:none}}
+@media (prefers-reduced-motion:reduce){.bk,.cloud,.rays,.tear{animation:none}}
 </style>
 </head>
 <body>
-<div class="glass" aria-hidden="true"><i class="bokeh b1"></i><i class="bokeh b2"></i><i class="bokeh b3"></i></div>
+<div class="glass" id="glass" aria-hidden="true">
+  <div class="sky s0"><i class="cloud c1"></i><i class="cloud c2"></i><i class="bk"></i></div>
+  <div class="sky s1"><i class="bk b1"></i><i class="bk b2"></i><i class="bk b3"></i></div>
+  <div class="sky s2"><i class="bk b1"></i><i class="bk b2"></i></div>
+  <div class="sky s3"><i class="bk b1"></i><i class="bk b2"></i></div>
+  <div class="sky s4"><i class="sun"></i><i class="rays"></i><i class="bk b1"></i></div>
+</div>
+<div id="flash" aria-hidden="true"></div>
 <canvas id="rainBase" aria-hidden="true"></canvas><canvas id="rainAct" aria-hidden="true"></canvas>
-<div class="vig" aria-hidden="true"></div>
+<div class="vig" id="vig" aria-hidden="true"></div>
 <div class="minibar" id="minibar" role="group" aria-label="Quick level filter"><div class="mb-in"><div class="mb-btns" id="mbBtns"></div><span class="mb-label" id="mbLabel"></span></div></div>
-<div id="surge" aria-hidden="true"><div><b id="surgeT"></b><i class="dr" id="surgeD"></i><span id="surgeS"></span></div></div>
+<div id="surge" aria-hidden="true"><div><b id="surgeT"></b><i class="ic" id="surgeD"></i><span id="surgeS"></span></div></div>
 <div class="page">
   <nav class="top" aria-label="Site"><a href="../">&larr; Yayo VOD Suggestions</a><span>List 02</span></nav>
   <header class="hero">
     <p class="kicker">Handle with care</p>
     <h1><span class="l1">Emotionally</span><span class="l2">devastating<i class="tear" aria-hidden="true"></i></span></h1>
-    <p class="lead"><span>Ranked by how hard they hit.</span><span>Names only. No plots, no spoilers.</span><span>Bring tissues.</span></p>
+    <p class="lead"><span>Ranked from storm to sunrise.</span><span>Names only. No plots, no spoilers.</span><span>Bring tissues.</span></p>
     <div class="scale" id="scale" role="group" aria-label="Filter by level"></div>
     <div class="tools"><button type="button" id="tearAll">Tear all</button><button type="button" id="sealAll">Seal all</button><p>Every title is sealed. Tear a ticket and the fog clears.</p></div>
   </header>
   <main id="list" aria-live="polite"></main>
   <footer class="foot">
     <b>How to read this</b>
-    <p>The order is one person's gut, from most to least devastating, not a measured score. The five levels simply cut that order into bands.</p>
+    <p>The order is one person's gut, from most to least devastating, not a measured score. The five levels cut that order into bands, and the sky changes with them as you scroll, from a storm to a sunrise.</p>
     <p><a href="../">More lists at Yayo VOD Suggestions</a></p>
   </footer>
 </div>
 <script>
+const ICONS={
+ storm:'<svg viewBox="0 0 24 24"><path d="M7 15a4 4 0 010-8 5.5 5.5 0 0110.6 1.2A3.5 3.5 0 0117 15"/><path d="M12.5 11l-2.5 4.5h3.5L11 20"/></svg>',
+ heavy:'<svg viewBox="0 0 24 24"><path d="M7 14a4 4 0 010-8 5.5 5.5 0 0110.6 1.2A3.5 3.5 0 0117 14"/><path d="M8 17l-1.2 3M12 17l-1.2 3M16 17l-1.2 3M10 21l-.6 1.4M14 21l-.6 1.4"/></svg>',
+ rain:'<svg viewBox="0 0 24 24"><path d="M7 15a4 4 0 010-8 5.5 5.5 0 0110.6 1.2A3.5 3.5 0 0117 15"/><path d="M9 18l-1 2.6M14 18l-1 2.6"/></svg>',
+ part:'<svg viewBox="0 0 24 24"><circle cx="16.5" cy="7.5" r="2.8"/><path d="M16.5 2.4v1.2M21.6 7.5h-1.2M20.1 3.9l-.9.9M12.9 3.9l.9.9"/><path d="M6.5 20.5a3.6 3.6 0 010-7.2 5 5 0 019.6.9 3.2 3.2 0 01-.8 6.3H6.5z"/></svg>',
+ sun:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>'};
 const BANDS=[
- {name:'Inconsolable',blurb:'Clear the rest of the evening.',n:5,from:1,to:6},
- {name:'Devastating',blurb:'You will need a minute.',n:4,from:7,to:12},
- {name:'Heavy',blurb:'It lingers on the way home.',n:3,from:13,to:18},
- {name:'Aching',blurb:'A quiet, steady hurt.',n:2,from:19,to:24},
- {name:'Bittersweet',blurb:'Tears, but the gentle kind.',n:1,from:25,to:29}];
+ {name:'Inconsolable',blurb:'Clear the rest of the evening.',icon:'storm',from:1,to:6,s:['#1a2440','#0c1226','#dce6f2']},
+ {name:'Heartbroken',blurb:'You will need a minute.',icon:'heavy',from:7,to:12,s:['#1f3763','#142645','#dce6f2']},
+ {name:'Aching',blurb:'It lingers on the way home.',icon:'rain',from:13,to:18,s:['#33507c','#223c62','#e8f0fa']},
+ {name:'Bittersweet',blurb:'Tears, but the gentle kind.',icon:'part',from:19,to:24,s:['#76627c','#4f4568','#fff0e0']},
+ {name:'Hopeful',blurb:'The light comes back.',icon:'sun',from:25,to:29,s:['#f7ca82','#eaa653','#2b1c0c']}];
 const FILMS=[
  ['One Day',2011],['Eternal Sunshine of the Spotless Mind',2004],['Kidding',2018,'Series'],['A Beautiful Mind',2001],['Saving Mr. Banks',2013],['The Shawshank Redemption',1994],
  ['Finch',2021],['Eagle Eye',2008],['Source Code',2011],['Lost in Translation',2003],['12 Years a Slave',2013],['The Intern',2015],
@@ -237,12 +265,11 @@ const FILMS=[
 ].map(([t,y,k],i)=>({t,y,k:k||'Film',r:i+1,b:BANDS.findIndex(b=>i+1>=b.from&&i+1<=b.to)}));
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DROP='<svg viewBox="0 0 10 14" aria-hidden="true"><path d="M5 .6C5 .6.8 6.2.8 9.2a4.2 4.2 0 008.4 0C9.2 6.2 5 .6 5 .6z"/></svg>';
-const drops=(n,tot=5)=>Array.from({length:tot},(_,i)=>DROP.replace('<svg','<svg'+(i<n?' class="on"':''))).join('');
+const ic=(i,extra='')=>`<span class="ic lv${i} ${extra}" aria-hidden="true">${ICONS[BANDS[i].icon]}</span>`;
 let tier='all',TORN=new Set();
 try{TORN=new Set(JSON.parse(localStorage.getItem('yayo-devastating-torn')||'[]'))}catch(e){}
 const save=()=>{try{localStorage.setItem('yayo-devastating-torn',JSON.stringify([...TORN]))}catch(e){}};
-const label=(f,b,torn)=>esc(`${torn?f.t+'. ':''}Ranked ${f.r} of ${FILMS.length}, level ${b.name}. ${f.k}, ${f.y}.${torn?'':' Title hidden. Activate to tear the ticket and reveal it.'}`);
+const label=(f,b,torn)=>esc(`${torn?f.t+'. ':''}Ranked ${f.r} of ${FILMS.length}, ${b.name}. ${f.k}, ${f.y}.${torn?'':' Title hidden. Activate to tear the ticket and reveal it.'}`);
 
 function bits(li){
   if(REDUCED||!li.animate)return;
@@ -268,8 +295,8 @@ $('sealAll').onclick=()=>{TORN.clear();save();render(false)};
 function scale(){
   const el=$('scale');el.innerHTML='';
   const mk=(cls,html,c,val)=>{const b=document.createElement('button');b.type='button';b.className='lvl '+cls;b.setAttribute('aria-pressed',String(tier===val));b.innerHTML=html+`<span class="c">${c}</span>`;b.onclick=()=>pick(val);el.append(b)};
-  mk('all',`<span class="n">All</span><span class="dr">${drops(5)}</span>`,`${FILMS.length} titles`,'all');
-  BANDS.forEach((b,i)=>mk('',`<span class="dr">${drops(b.n)}</span><span class="n">${b.name}</span>`,`ranks ${b.from}–${b.to}`,i));
+  mk('all',`<span class="ic lv3" aria-hidden="true">${ICONS.part}</span><span class="n">All</span>`,`${FILMS.length} titles`,'all');
+  BANDS.forEach((b,i)=>mk('',`${ic(i)}<span class="n">${b.name}</span>`,`ranks ${b.from}–${b.to}`,i));
 }
 function bar(){
   const w=$('mbBtns');w.innerHTML='';
@@ -279,12 +306,12 @@ function bar(){
 }
 function surge(b){
   if(REDUCED)return;
-  const el=$('surge');$('surgeT').textContent=b.name;$('surgeD').innerHTML=drops(b.n);$('surgeS').textContent=`Ranks ${b.from} to ${b.to}`;
+  const el=$('surge');$('surgeT').textContent=b.name;$('surgeD').className='ic lv'+BANDS.indexOf(b);$('surgeD').innerHTML=ICONS[b.icon];$('surgeS').textContent=`Ranks ${b.from} to ${b.to}`;
   el.classList.remove('go');void el.offsetWidth;el.classList.add('go');clearTimeout(surge.t);surge.t=setTimeout(()=>el.classList.remove('go'),1600);
-  window.rainBurst&&window.rainBurst(5);
+  if(BANDS.indexOf(b)<3&&window.rainBurst)window.rainBurst(5);
 }
 function pick(val){
-  tier=(tier===val&&val!=='all')?'all':val;scale();bar();render(true);
+  tier=(tier===val&&val!=='all')?'all':val;scale();bar();render(true);updateLevel();
   if(tier!=='all')surge(BANDS[tier]);
   const l=$('list');
   if(scrollY>0||l.getBoundingClientRect().top>innerHeight*.5)scrollTo({top:Math.max(0,l.getBoundingClientRect().top+scrollY-(innerWidth<700?72:76)),behavior:REDUCED?'auto':'smooth'});
@@ -295,8 +322,8 @@ function render(deal){
   BANDS.forEach((b,bi)=>{
     if(tier!=='all'&&tier!==bi)return;
     const rows=FILMS.filter(f=>f.b===bi);if(!rows.length)return;
-    html+=`<section class="tier" aria-labelledby="h${bi}"><h2 class="band" id="h${bi}"><span class="dr" aria-hidden="true">${drops(b.n)}</span><span class="nm">${b.name}</span><span class="bl">${esc(b.blurb)}</span><span class="ct">ranks ${b.from}–${b.to}</span></h2><ol>`+
-    rows.map(f=>{const torn=TORN.has(f.r);return `<li class="row${torn?' torn':''}" style="--i:${n++}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}</span><span>${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Hits</small><span class="dr">${drops(b.n)}</span><b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
+    html+=`<section class="tier" data-i="${bi}" aria-labelledby="h${bi}"><h2 class="band" id="h${bi}">${ic(bi)}<span class="nm">${b.name}</span><span class="bl">${esc(b.blurb)}</span><span class="ct">ranks ${b.from}–${b.to}</span></h2><ol>`+
+    rows.map(f=>{const torn=TORN.has(f.r);return `<li class="row${torn?' torn':''}" style="--i:${n++};--s1:${b.s[0]};--s2:${b.s[1]};--sx:${b.s[2]}" data-r="${f.r}"><div class="ticket" role="button" tabindex="0" aria-pressed="${torn}" aria-label="${label(f,b,torn)}"><div class="stubl"><small>No.</small><span class="rk">${String(f.r).padStart(2,'0')}</span></div><div class="tt"><div class="ttl"><h3>${esc(f.t)}</h3><span class="fog" aria-hidden="true">Tear to clear the fog</span></div><p class="meta"><span>${f.k}</span><span>${f.y}</span></p><i class="code" aria-hidden="true"></i><span class="used" aria-hidden="true">Felt it</span></div><div class="stubr" aria-hidden="true"><small>Level</small>${ic(bi)}<b>${b.name}</b></div></div></li>`}).join('')+`</ol></section>`;
   });
   list.innerHTML=html||'<p class="empty">Nothing here. Pick another level.</p>';
   clearTimeout(render.t);if(deal)render.t=setTimeout(()=>list.classList.remove('deal'),2800);
@@ -305,10 +332,22 @@ function render(deal){
   new IntersectionObserver(([e])=>{const on=!e.isIntersecting&&e.boundingClientRect.top<0;mb.classList.toggle('on',on);document.documentElement.classList.toggle('barOn',on)}).observe(sc)})();
 scale();bar();render(false);
 
-/* rain on the glass: static beads on one canvas, running drops with trails on the other */
+/* the sky and the rain follow where you are in the list */
+function computeL(){
+  const secs=[...document.querySelectorAll('.tier')];if(!secs.length)return 0;
+  const idx=secs.map(x=>+x.dataset.i);if(secs.length===1)return idx[0];
+  const c=scrollY+innerHeight*.5,cs=secs.map(x=>{const r=x.getBoundingClientRect();return r.top+scrollY+r.height/2});
+  if(c<=cs[0])return idx[0];
+  for(let i=0;i<cs.length-1;i++)if(c<=cs[i+1]){const t=(c-cs[i])/(cs[i+1]-cs[i]);return idx[i]+(idx[i+1]-idx[i])*t}
+  return idx[idx.length-1];
+}
+function updateLevel(){window.setLevel&&window.setLevel(computeL())}
 (function(){
-  const base=$('rainBase'),act=$('rainAct'),bx=base.getContext('2d'),ax=act.getContext('2d');
-  let W,H,dpr,runners=[],boost=1,last=0,acc=0,raf=0;
+  const base=$('rainBase'),act=$('rainAct'),glass=$('glass'),vig=$('vig'),fl=$('flash'),bx=base.getContext('2d'),ax=act.getContext('2d');
+  const RATE=[2.7,1.8,1.05,.32,0],BEAD=[1,.95,.78,.3,0],WIND=[75,18,0,0,0],SPEED=[1.75,1.3,1,.8,0],MOTE=[0,0,0,.22,1],VIGN=[1,1,.92,.7,.4];
+  let W,H,dpr,runners=[],motes=[],boost=1,last=0,acc=0,raf=0,Lt=0,Lc=0,nextFlash=performance.now()+3500;
+  const P=a=>{const i=Math.min(3,Math.floor(Lc)),t=Lc-i;return a[i]+(a[i+1]-a[i])*t};
+  function skies(){for(let i=0;i<5;i++)glass.style.setProperty('--w'+i,Math.max(0,1-Math.abs(Lc-i)).toFixed(3));base.style.opacity=P(BEAD).toFixed(3);vig.style.opacity=P(VIGN).toFixed(3)}
   function bead(c,x,y,r,a){
     const g=c.createRadialGradient(x-r*.3,y-r*.38,r*.08,x,y,r);
     g.addColorStop(0,`rgba(238,246,255,${.6*a})`);g.addColorStop(.5,`rgba(150,190,238,${.13*a})`);g.addColorStop(1,`rgba(4,9,18,${.5*a})`);
@@ -317,25 +356,38 @@ scale();bar();render(false);
   }
   function seed(){bx.clearRect(0,0,W,H);const n=Math.round(W*H/8200);for(let i=0;i<n;i++)bead(bx,Math.random()*W,Math.random()*H,1+Math.pow(Math.random(),2.5)*6.5,.45+Math.random()*.55)}
   function size(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;for(const c of[base,act]){c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px'}bx.setTransform(dpr,0,0,dpr,0,0);ax.setTransform(dpr,0,0,dpr,0,0);seed()}
-  function spawn(){runners.push({x:Math.random()*W,y:-12,r:2+Math.random()*3.4,sp:55+Math.random()*150,pause:0,drift:(Math.random()-.5)*10,t:[]})}
+  function spawn(){runners.push({x:Math.random()*W,y:-12,r:2+Math.random()*3.4,sp:55+Math.random()*150,pause:0,drift:P(WIND)*(.5+Math.random()*.9),t:[]})}
+  function mote(){motes.push({x:Math.random()*W,y:H+10,vy:-(10+Math.random()*26),vx:(Math.random()-.5)*12,r:1.2+Math.random()*2.8,ph:Math.random()*6.28})}
+  function flash(){if(fl.animate)fl.animate([{opacity:0},{opacity:.5},{opacity:.06},{opacity:.38},{opacity:0}],{duration:700,easing:'ease-out'})}
   function frame(ts){
     raf=requestAnimationFrame(frame);
     const dt=Math.min(.05,(ts-last)/1000||0);last=ts;
+    Lc+=(Lt-Lc)*Math.min(1,dt*2.2);skies();
     boost+=(1-boost)*Math.min(1,dt*1.5);
-    acc+=dt*1.1*boost;while(acc>1&&runners.length<60+boost*20){acc-=1;spawn()}if(acc>1)acc=0;
+    const rate=P(RATE)*boost,spd=P(SPEED);
+    acc+=dt*1.1*rate;while(acc>1&&runners.length<70+boost*20){acc-=1;spawn()}if(acc>1)acc=0;
+    if(Lc<.9&&ts>nextFlash){flash();nextFlash=ts+6500+Math.random()*9000}
     ax.clearRect(0,0,W,H);
     runners=runners.filter(r=>{
-      if(r.pause>0)r.pause-=dt;else{if(Math.random()<.012)r.pause=.12+Math.random()*.55;r.y+=r.sp*dt*(boost>1.5?1.6:1);r.x+=r.drift*dt;r.t.push([r.x+(Math.random()-.5)*.6,r.y]);if(r.t.length>70)r.t.shift()}
+      if(r.pause>0)r.pause-=dt;else{if(Math.random()<.012)r.pause=.12+Math.random()*.55;r.y+=r.sp*dt*(boost>1.5?1.6:1)*Math.max(.55,spd);r.x+=r.drift*dt;r.t.push([r.x+(Math.random()-.5)*.6,r.y]);if(r.t.length>70)r.t.shift()}
       if(r.t.length>1){ax.strokeStyle='rgba(205,228,255,.075)';ax.lineWidth=r.r*.7;ax.lineCap='round';ax.beginPath();ax.moveTo(r.t[0][0],r.t[0][1]);for(let i=1;i<r.t.length;i++)ax.lineTo(r.t[i][0],r.t[i][1]);ax.stroke()}
-      bead(ax,r.x,r.y,r.r,1);return r.y<H+20});
+      bead(ax,r.x,r.y,r.r,Math.min(1,P(BEAD)+.25));return r.y<H+20&&r.x>-60&&r.x<W+60});
+    const want=Math.round(P(MOTE)*(W<700?26:48));
+    if(motes.length<want&&Math.random()<.4)mote();
+    motes=motes.filter(m=>{m.y+=m.vy*dt;m.x+=m.vx*dt+Math.sin(ts/900+m.ph)*.18;const a=(.35+.35*Math.sin(ts/500+m.ph))*Math.min(1,P(MOTE)*1.4);
+      if(a>.02){const g=ax.createRadialGradient(m.x,m.y,0,m.x,m.y,m.r*4);g.addColorStop(0,`rgba(255,226,160,${a})`);g.addColorStop(1,'rgba(255,226,160,0)');ax.fillStyle=g;ax.beginPath();ax.arc(m.x,m.y,m.r*4,0,6.2832);ax.fill()}
+      return m.y>-20&&(motes.length<=want+6)});
   }
-  window.rainBurst=n=>{boost=n};
-  size();
-  let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(size,200)});
+  window.rainBurst=n=>{if(Lt<3)boost=n};
+  window.setLevel=L=>{Lt=L;if(REDUCED){Lc=L;skies()}};
+  size();skies();
+  let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{size();updateLevel()},200)});
   if(REDUCED)return;
   document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(raf)}else{last=performance.now();raf=requestAnimationFrame(frame)}});
   raf=requestAnimationFrame(frame);
 })();
+let st=0;addEventListener('scroll',()=>{if(st)return;st=requestAnimationFrame(()=>{st=0;updateLevel()})},{passive:true});
+updateLevel();
 </script>
 </body>
 </html>
