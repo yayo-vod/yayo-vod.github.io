@@ -143,7 +143,8 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
 .row.torn .stubl{transform:translate(-.7rem,.5rem) rotate(-5deg);clip-path:var(--zz-l)}
 .row.torn .tt{clip-path:var(--zz-r)}
 .row.torn .ttl h3{visibility:visible}
-.row.torn .redact,.row.torn .code{display:none}
+.row.torn .redact{display:none}
+.row.torn .code{opacity:0;visibility:hidden}
 .row.torn .used{opacity:.9}
 .row.torn .ticket{cursor:default}
 .bit{position:absolute;width:7px;height:5px;background:var(--bone);z-index:9;pointer-events:none;opacity:0}
@@ -194,6 +195,8 @@ html.barOn{--bar:calc(3.5rem + env(safe-area-inset-top,0px))}
   .row.tearing .ttl h3{visibility:visible;animation:titleIn .7s cubic-bezier(.2,.9,.25,1) .3s both}
   .row.tearing .redact{animation:redactOut .5s cubic-bezier(.6,0,.4,1) .2s both}
   .row.tearing .used{animation:usedIn .35s cubic-bezier(.2,1.6,.4,1) .6s both}
+  .row.tearing .code{animation:codeOut .55s cubic-bezier(.6,0,.4,1) .12s both}
+  @keyframes codeOut{from{opacity:.35;clip-path:inset(0 0 0 0)}to{opacity:0;clip-path:inset(0 0 0 100%)}}
   @keyframes tearStub{0%{transform:none;clip-path:none}18%{transform:translate(-4px,0) rotate(-1.5deg)}40%{transform:translate(-9px,5px) rotate(-5deg);clip-path:var(--zz-l)}62%{transform:translate(-13px,10px) rotate(-8deg)}100%{transform:translate(-.7rem,.5rem) rotate(-5deg);clip-path:var(--zz-l)}}
   @keyframes tearBody{0%{transform:none;clip-path:none}22%{transform:translateX(5px);clip-path:none}40%{clip-path:var(--zz-r)}100%{transform:none;clip-path:var(--zz-r)}}
   @keyframes redactOut{to{transform:translateX(22%) scaleX(.6);opacity:0;clip-path:inset(0 0 0 100%)}}
