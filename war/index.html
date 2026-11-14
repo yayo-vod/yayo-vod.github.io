@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>War Films Ranked</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stardos%20Stencil:wght@400;700&family=IBM%20Plex%20Sans:wght@400;500;600&family=Courier%20Prime:wght@400;700&display=swap">
+<style>
+body{margin:0}
+:root{
+  --bg: #d3d0b0;
+  --surface: #e8e5cd;
+  --paper-dark: #dcd8bb;
+  --fg: #1d2415;
+  --muted: #4a503a;
+  --line: #aba884;
+  --topo-ink: #b7b490;
+  --accent: #a3231a;
+  --accent-text: #8f1d15;
+  --display: "Stardos Stencil", "Arial Narrow", Impact, sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "Courier Prime", "Courier New", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg: #12170e;
+  --surface: #1d2417;
+  --paper-dark: #252d1e;
+  --fg: #e4e6d3;
+  --muted: #a4ab8e;
+  --line: #343d29;
+  --topo-ink: #232c1b;
+  --accent: #e0553f;
+  --accent-text: #f0735c;
+  color-scheme: dark}}
+:root[data-theme="dark"]{
+  --bg: #12170e;
+  --surface: #1d2417;
+  --paper-dark: #252d1e;
+  --fg: #e4e6d3;
+  --muted: #a4ab8e;
+  --line: #343d29;
+  --topo-ink: #232c1b;
+  --accent: #e0553f;
+  --accent-text: #f0735c;
+  color-scheme: dark}
+/* structure */
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:400 1rem/1.55 var(--body);-webkit-font-smoothing:antialiased;position:relative}
+.wrap{position:relative;z-index:1;max-width:62rem;margin-inline:auto;padding-block:clamp(1.25rem,4vw,3rem);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+h1,h2,h3,p,ol,ul{margin:0}
+ol,ul{list-style:none;padding:0}
+.controls{position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{cursor:pointer;color:inherit;min-height:2.5rem}
+.search{display:grid;gap:.35rem}
+.search input{font:inherit;width:100%;max-width:26rem;color:var(--fg)}
+.segs{display:flex;gap:3px}
+.segs i{display:block}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+
+/* WAR skin: field dossier. Stencil title, paper file cards, red grade stamps, contour-map ground. */
+:root{--topo:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22400%22%20height%3D%22400%22%20viewBox%3D%220%200%20400%20400%22%3E%3Cpath%20d%3D%22M239.6%2C200.0%20L239.2%2C203.0%20L237.2%2C205.7%20L233.9%2C207.9%20L229.8%2C209.6%20L225.6%2C210.6%20L221.8%2C211.4%20L218.7%2C212.2%20L216.6%2C213.2%20L215.0%2C214.9%20L213.6%2C217.0%20L212.0%2C219.4%20L209.9%2C221.9%20L207.1%2C224.0%20L203.7%2C225.4%20L200.0%2C226.1%20L196.2%2C225.9%20L192.6%2C225.2%20L189.1%2C224.1%20L185.8%2C222.9%20L182.7%2C221.6%20L179.6%2C220.2%20L176.7%2C218.7%20L174.1%2C216.8%20L172.1%2C214.6%20L171.0%2C212.1%20L170.8%2C209.3%20L171.5%2C206.7%20L172.7%2C204.2%20L173.9%2C202.0%20L174.6%2C200.0%20L174.6%2C198.1%20L173.6%2C196.0%20L172.1%2C193.5%20L170.4%2C190.5%20L169.3%2C187.2%20L169.2%2C183.9%20L170.4%2C180.8%20L173.1%2C178.5%20L176.8%2C177.0%20L181.1%2C176.5%20L185.6%2C176.7%20L189.8%2C177.4%20L193.6%2C178.2%20L196.9%2C178.9%20L200.0%2C179.3%20L203.0%2C179.4%20L206.1%2C179.4%20L209.2%2C179.6%20L212.3%2C180.1%20L215.2%2C181.1%20L217.8%2C182.4%20L220.1%2C183.9%20L222.4%2C185.5%20L224.7%2C187.1%20L227.3%2C188.7%20L230.2%2C190.3%20L233.4%2C192.2%20L236.3%2C194.4%20L238.6%2C197.1%20L239.6%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M253.3%2C200.0%20L253.3%2C204.0%20L252.4%2C208.0%20L250.5%2C211.8%20L247.7%2C215.3%20L244.4%2C218.5%20L241.2%2C221.6%20L238.4%2C224.9%20L235.9%2C228.7%20L233.4%2C233.1%20L230.4%2C238.0%20L226.5%2C242.9%20L221.2%2C247.1%20L214.7%2C249.9%20L207.4%2C250.8%20L200.0%2C249.6%20L193.2%2C246.4%20L187.6%2C242.0%20L183.3%2C237.0%20L180.0%2C232.4%20L177.0%2C228.7%20L173.7%2C226.0%20L169.6%2C224.3%20L164.4%2C223.1%20L158.4%2C221.8%20L152.3%2C219.8%20L146.7%2C217.1%20L142.4%2C213.5%20L139.6%2C209.2%20L138.4%2C204.7%20L138.3%2C200.0%20L139.0%2C195.4%20L139.9%2C190.8%20L141.1%2C186.2%20L142.6%2C181.6%20L144.8%2C177.1%20L148.2%2C172.9%20L152.9%2C169.5%20L158.9%2C167.1%20L165.8%2C166.1%20L172.9%2C166.3%20L179.7%2C167.2%20L185.7%2C168.3%20L190.8%2C168.9%20L195.4%2C168.5%20L200.0%2C166.8%20L205.2%2C164.1%20L211.5%2C161.0%20L218.8%2C158.3%20L226.7%2C156.8%20L234.5%2C157.0%20L241.3%2C159.1%20L246.5%2C162.8%20L249.8%2C167.7%20L251.5%2C173.1%20L251.9%2C178.4%20L251.8%2C183.4%20L251.8%2C187.9%20L252.1%2C192.0%20L252.7%2C196.0%20L253.3%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M287.6%2C200.0%20L280.1%2C206.1%20L271.6%2C211.0%20L263.7%2C214.9%20L257.5%2C218.4%20L253.6%2C222.3%20L252.0%2C227.2%20L251.6%2C233.4%20L251.0%2C240.8%20L249.2%2C248.7%20L245.1%2C256.3%20L238.6%2C262.4%20L230.0%2C266.5%20L220.1%2C268.2%20L209.9%2C267.7%20L200.0%2C265.8%20L190.8%2C263.0%20L182.3%2C260.0%20L174.2%2C257.1%20L166.4%2C254.3%20L158.9%2C251.3%20L151.9%2C247.7%20L146.0%2C243.2%20L141.5%2C237.9%20L138.8%2C232.0%20L137.3%2C226.1%20L136.5%2C220.4%20L135.2%2C215.1%20L132.7%2C210.3%20L128.4%2C205.4%20L122.6%2C200.0%20L116.0%2C193.6%20L110.2%2C186.3%20L106.7%2C178.2%20L106.7%2C170.1%20L110.8%2C162.9%20L118.5%2C157.4%20L128.9%2C153.9%20L140.6%2C152.5%20L152.2%2C152.6%20L162.6%2C153.4%20L171.5%2C153.9%20L179.0%2C153.5%20L185.8%2C152.0%20L192.6%2C149.6%20L200.0%2C147.0%20L208.1%2C144.8%20L216.6%2C143.8%20L225.2%2C144.1%20L233.5%2C145.8%20L241.4%2C148.4%20L248.9%2C151.6%20L256.4%2C154.9%20L264.2%2C158.4%20L272.2%2C162.2%20L280.2%2C166.7%20L287.2%2C172.0%20L292.2%2C178.4%20L294.1%2C185.6%20L292.5%2C193.0%20L287.6%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M314.3%2C200.0%20L313.4%2C208.6%20L311.4%2C217.0%20L308.8%2C225.5%20L305.9%2C233.9%20L302.2%2C242.5%20L297.2%2C250.8%20L290.0%2C258.4%20L280.4%2C264.3%20L268.5%2C267.9%20L255.2%2C268.9%20L241.7%2C267.5%20L229.1%2C264.5%20L218.1%2C261.2%20L208.6%2C259.0%20L200.0%2C258.8%20L191.1%2C261.0%20L180.8%2C265.0%20L168.5%2C269.7%20L154.4%2C273.7%20L139.4%2C275.6%20L124.9%2C274.4%20L112.6%2C269.9%20L103.6%2C262.5%20L98.4%2C253.2%20L96.4%2C243.1%20L96.6%2C233.1%20L97.8%2C223.9%20L98.8%2C215.5%20L99.3%2C207.6%20L99.3%2C200.0%20L99.6%2C192.4%20L101.1%2C184.9%20L104.3%2C177.6%20L109.5%2C171.0%20L116.0%2C165.1%20L123.2%2C159.8%20L130.2%2C154.8%20L136.5%2C149.2%20L142.1%2C142.7%20L147.7%2C134.8%20L154.3%2C126.0%20L162.7%2C117.3%20L173.4%2C109.8%20L186.1%2C105.1%20L200.0%2C104.0%20L213.6%2C107.0%20L225.5%2C113.5%20L235.0%2C122.5%20L241.9%2C132.3%20L246.9%2C141.5%20L251.3%2C149.2%20L256.5%2C154.8%20L263.4%2C158.9%20L272.3%2C162.2%20L282.6%2C165.7%20L293.0%2C170.2%20L302.2%2C176.1%20L309.1%2C183.3%20L313.1%2C191.4%20L314.3%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M343.4%2C200.0%20L342.8%2C210.8%20L339.6%2C221.4%20L334.8%2C231.5%20L329.4%2C241.5%20L323.6%2C251.4%20L317.0%2C261.2%20L308.7%2C270.5%20L298.1%2C278.4%20L285.0%2C284.2%20L269.8%2C287.1%20L253.7%2C286.8%20L237.9%2C284.0%20L223.5%2C279.7%20L211.0%2C275.6%20L200.0%2C273.2%20L189.3%2C273.3%20L177.5%2C276.2%20L163.5%2C280.8%20L147.0%2C285.8%20L128.5%2C289.2%20L109.7%2C289.5%20L92.7%2C285.8%20L79.3%2C278.3%20L70.8%2C267.6%20L67.2%2C255.2%20L67.6%2C242.4%20L70.5%2C230.3%20L73.9%2C219.3%20L76.7%2C209.3%20L78.4%2C200.0%20L79.2%2C190.9%20L80.4%2C181.7%20L82.8%2C172.6%20L87.4%2C163.9%20L94.1%2C156.0%20L102.6%2C149.0%20L111.7%2C142.8%20L120.8%2C136.7%20L129.2%2C129.9%20L137.3%2C121.9%20L145.9%2C112.5%20L156.0%2C102.5%20L168.4%2C93.1%20L183.3%2C85.9%20L200.0%2C82.4%20L217.0%2C83.6%20L232.6%2C89.5%20L245.4%2C99.4%20L254.7%2C111.5%20L261.0%2C123.9%20L265.5%2C135.1%20L270.0%2C144.0%20L276.2%2C150.6%20L285.2%2C155.5%20L296.7%2C159.8%20L309.7%2C164.8%20L322.5%2C171.3%20L333.1%2C179.6%20L340.3%2C189.4%20L343.4%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M375.1%2C200.0%20L385.8%2C214.1%20L389.3%2C229.0%20L384.8%2C243.2%20L373.0%2C255.5%20L356.1%2C264.9%20L336.6%2C271.5%20L317.2%2C276.0%20L299.4%2C279.5%20L283.9%2C283.1%20L270.2%2C287.6%20L257.3%2C292.7%20L244.2%2C297.9%20L230.2%2C302.3%20L215.3%2C305.0%20L200.0%2C305.6%20L184.8%2C304.3%20L169.9%2C301.8%20L155.2%2C299.2%20L139.9%2C297.2%20L123.2%2C295.8%20L104.6%2C294.5%20L84.6%2C292.3%20L64.4%2C287.9%20L46.4%2C280.4%20L32.9%2C269.5%20L26.1%2C255.8%20L26.7%2C240.5%20L34.1%2C225.4%20L46.3%2C211.6%20L60.1%2C200.0%20L72.5%2C190.4%20L81.2%2C181.8%20L85.2%2C173.1%20L85.3%2C163.2%20L83.3%2C151.5%20L81.8%2C138.2%20L83.1%2C124.2%20L88.6%2C110.9%20L98.7%2C99.7%20L112.7%2C91.1%20L129.2%2C85.5%20L146.9%2C82.2%20L164.7%2C80.5%20L182.4%2C79.4%20L200.0%2C78.8%20L217.7%2C78.7%20L235.4%2C80.0%20L252.6%2C83.5%20L268.0%2C90.0%20L280.7%2C99.4%20L289.8%2C111.0%20L295.4%2C123.8%20L298.5%2C136.1%20L301.2%2C147.1%20L305.7%2C156.1%20L313.8%2C163.5%20L326.3%2C170.5%20L342.3%2C178.2%20L359.6%2C187.9%20L375.1%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M382.9%2C200.0%20L377.8%2C213.5%20L373.2%2C226.5%20L367.9%2C239.3%20L360.8%2C251.5%20L350.8%2C262.7%20L337.8%2C272.1%20L322.7%2C279.5%20L306.7%2C285.3%20L291.4%2C290.5%20L277.3%2C296.5%20L264.5%2C304.3%20L251.8%2C314.7%20L237.6%2C327.3%20L220.5%2C340.3%20L200.0%2C351.7%20L176.8%2C359.0%20L152.7%2C360.2%20L130.2%2C354.7%20L111.6%2C342.9%20L98.3%2C326.8%20L90.4%2C308.7%20L86.2%2C291.0%20L83.5%2C275.5%20L79.8%2C262.9%20L73.1%2C252.8%20L63.0%2C243.9%20L50.3%2C235.0%20L37.1%2C224.9%20L25.7%2C213.2%20L17.9%2C200.0%20L14.8%2C186.0%20L16.2%2C171.9%20L20.8%2C158.1%20L27.3%2C144.7%20L34.7%2C131.3%20L42.5%2C117.6%20L51.4%2C103.7%20L62.5%2C90.0%20L76.8%2C77.9%20L94.8%2C68.9%20L116.1%2C64.2%20L139.0%2C64.8%20L161.7%2C70.2%20L182.3%2C79.0%20L200.0%2C88.9%20L214.9%2C97.6%20L228.6%2C103.2%20L243.0%2C104.7%20L260.1%2C102.8%20L280.8%2C99.2%20L304.9%2C96.0%20L330.4%2C95.7%20L354.8%2C99.7%20L375.0%2C108.4%20L389.2%2C121.4%20L396.4%2C137.0%20L397.5%2C153.8%20L394.2%2C170.3%20L388.7%2C185.7%20L382.9%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M448.1%2C200.0%20L452.9%2C219.1%20L447.3%2C237.8%20L432.8%2C254.5%20L412.2%2C268.0%20L389.1%2C278.6%20L366.4%2C287.0%20L345.8%2C294.5%20L327.7%2C302.1%20L311.3%2C310.3%20L295.2%2C318.7%20L278.2%2C326.4%20L259.7%2C332.3%20L240.0%2C335.5%20L219.9%2C336.1%20L200.0%2C334.9%20L180.6%2C333.0%20L161.1%2C331.9%20L140.3%2C332.2%20L117.3%2C333.8%20L91.4%2C335.4%20L63.6%2C335.2%20L35.8%2C331.3%20L11.2%2C322.4%20L-7.0%2C308.3%20L-16.4%2C289.9%20L-16.2%2C269.3%20L-7.7%2C248.6%20L6.0%2C229.7%20L20.9%2C213.6%20L33.1%2C200.0%20L40.2%2C187.9%20L41.4%2C175.7%20L38.1%2C162.1%20L33.1%2C146.5%20L29.7%2C129.2%20L30.6%2C111.4%20L37.4%2C94.6%20L50.1%2C80.1%20L67.4%2C68.6%20L87.7%2C60.0%20L109.4%2C53.4%20L131.4%2C48.1%20L153.7%2C43.2%20L176.5%2C39.0%20L200.0%2C36.1%20L224.0%2C35.9%20L247.3%2C39.6%20L268.6%2C48.1%20L286.1%2C60.8%20L298.9%2C76.6%20L307.5%2C93.5%20L313.5%2C109.3%20L319.6%2C122.5%20L328.7%2C132.7%20L343.0%2C140.5%20L363.0%2C147.8%20L387.0%2C156.3%20L411.9%2C167.6%20L433.6%2C182.3%20L448.1%2C200.0Z%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.4%22/%3E%3C/svg%3E")}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--topo-ink);-webkit-mask:var(--topo) center/520px;mask:var(--topo) center/520px;opacity:.55}
+.head{position:relative;display:grid;gap:1rem;padding:clamp(1.25rem,4vw,2.25rem);background:var(--surface);border:2px solid var(--fg);box-shadow:6px 6px 0 var(--fg)}
+.head::before,.head::after{content:"";position:absolute;width:1.2rem;height:1.2rem;border:solid var(--accent);pointer-events:none}
+.head::before{top:-.7rem;left:-.7rem;border-width:3px 0 0 3px}
+.head::after{bottom:-.7rem;right:-.7rem;border-width:0 3px 3px 0}
+.eyebrow{font:700 .8rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent-text);display:flex;align-items:center;gap:.75rem}
+.eyebrow::before{content:"";width:2.2rem;height:3px;background:var(--accent)}
+h1{font:400 clamp(2.9rem,11vw,6.6rem)/.88 var(--display);text-transform:uppercase;letter-spacing:.02em;text-wrap:balance}
+.lead{max-width:40rem;color:var(--muted);font-size:1.0625rem}
+.stats{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;font:700 .8rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:.9rem;border-top:2px dashed var(--line)}
+.stats b{color:var(--fg)}
+.controls{margin-top:1.5rem;display:grid;gap:.8rem;padding:1rem 0;background:linear-gradient(var(--bg) 85%,transparent)}
+.chip{font:700 .78rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.6rem .8rem;background:var(--surface);border:2px solid var(--fg);border-radius:0;box-shadow:3px 3px 0 var(--fg)}
+.chip:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);box-shadow:none;transform:translate(3px,3px)}
+.search label{font:700 .72rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.search input{background:var(--surface);border:2px solid var(--fg);border-radius:0;padding:.7rem .85rem}
+.search input::placeholder{color:var(--muted)}
+.tier{margin-top:clamp(1.75rem,5vw,3rem)}
+.tier h2{display:grid;grid-template-columns:auto 1fr;gap:.1rem 1rem;align-items:center}
+.tier h2 .g{grid-row:span 2;display:grid;place-items:center;width:3.4rem;height:3.4rem;background:var(--fg);color:var(--bg);font:400 2.4rem/1 var(--display)}
+.tier h2 .tn{font:400 clamp(1.4rem,4vw,2rem)/1 var(--display);text-transform:uppercase;letter-spacing:.05em}
+.tier h2 small{font:400 .92rem/1.35 var(--body);color:var(--muted)}
+.tier ol{margin-top:1rem;display:grid;gap:.9rem}
+.film{display:grid;grid-template-columns:4.2rem minmax(0,1fr);background:var(--surface);border:2px solid var(--fg);box-shadow:5px 5px 0 var(--line);position:relative}
+.tab{display:grid;align-content:center;justify-items:center;gap:.15rem;border-right:2px dashed var(--fg);padding:.6rem .2rem;background:var(--paper-dark)}
+.tab span{font:700 .6rem/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.tab b{font:400 1.9rem/1 var(--display);font-variant-numeric:tabular-nums}
+.main{padding:.9rem 1rem;display:grid;gap:.3rem;align-content:center;min-width:0}
+.name{font:400 1.55rem/1.05 var(--display);text-transform:uppercase;letter-spacing:.03em}
+.name span{font:700 .8rem/1 var(--mono);color:var(--muted);margin-left:.7rem;letter-spacing:.05em}
+.name span::before{content:"// "}
+.note{color:var(--muted);max-width:36rem}
+.stamp{grid-column:1/-1;display:flex;align-items:center;gap:.7rem;padding:.55rem 1rem;border-top:2px dashed var(--fg);font:700 .72rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text)}
+.stamp b{font:400 1.5rem/1 var(--display);border:3px solid currentColor;padding:.1rem .5rem;transform:rotate(-5deg);letter-spacing:0}
+.stamp .segs{margin-left:auto}
+.segs i{width:1rem;height:.6rem;background:var(--line);border:1px solid var(--fg)}
+.segs i.on{background:var(--accent);border-color:var(--accent)}
+.t3 .stamp,.t4 .stamp{color:var(--muted)}
+.t3 .segs i.on,.t4 .segs i.on{background:var(--muted);border-color:var(--muted)}
+.empty{padding:2rem 0;color:var(--muted);font:700 .85rem/1.4 var(--mono)}
+.foot{margin-top:3rem;padding-top:1rem;border-top:2px dashed var(--fg);color:var(--muted);font-size:.9rem;max-width:44rem}
+@media (min-width:46rem){
+  .film{grid-template-columns:5rem minmax(0,1fr) 12.5rem}
+  .stamp{grid-column:auto;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;border-top:0;border-left:2px dashed var(--fg);padding:.9rem .6rem;text-align:center}
+  .stamp .segs{margin-left:0}
+  .stamp b{font-size:2.2rem}
+  .name{font-size:1.8rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  .chip{transition:transform .1s,box-shadow .1s,background .15s}
+  .stamp b{animation:stamp .5s cubic-bezier(.2,1.4,.4,1) both}
+  @keyframes stamp{from{transform:rotate(-5deg) scale(1.35);opacity:.2}to{transform:rotate(-5deg) scale(1);opacity:1}}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">&larr; All lists</a>
+  <header class="head">
+    <div class="eyebrow" id="eyebrow"></div>
+    <h1 id="h1"></h1>
+    <p class="lead" id="lead"></p>
+    <ul class="stats" id="stats"></ul>
+  </header>
+  <div class="controls">
+    <div class="chips" id="chips" role="group" aria-label="Filter by grade"></div>
+    <div class="search"><label for="q">Search title</label><input id="q" type="search" placeholder="Type a title" autocomplete="off"></div>
+  </div>
+  <main id="list" aria-live="polite"></main>
+  <footer class="foot" id="foot"></footer>
+</div>
+<script>
+const L = {"eyebrow": "Accuracy audit", "heading": "War films, most reliable first", "lead": "21 war movies graded on how closely they follow what really happened. Grade A films follow the record. Grade E films only borrow a war as scenery.", "meterName": "Reliability grade", "slots": 5, "footer": "Grades borrow their letters from the way intelligence services rate sources: A is most reliable. The ranking is a judgment from general knowledge of the films and the events, not a scholarly ranking. Expect to disagree about the middle.", "tiers": [{"name": "True story", "blurb": "Real people and events, told close to the record.", "short": "True story", "fill": 5, "grade": "A"}, {"name": "Real setting, invented story", "blurb": "A real battle or war, with fictional characters.", "short": "Real setting", "fill": 4, "grade": "B"}, {"name": "Fiction with a real backdrop", "blurb": "Invented plot that touches real history.", "short": "Fiction, real backdrop", "fill": 3, "grade": "C"}, {"name": "Alternate history", "blurb": "Rewrites what actually happened, on purpose.", "short": "Alternate history", "fill": 2, "grade": "D"}, {"name": "Fantasy, horror, sci-fi", "blurb": "A war used as scenery for something impossible.", "short": "Not historical", "fill": 1, "grade": "E"}], "films": [{"title": "Valkyrie", "year": 2008, "tier": 0, "note": "The 1944 plot to kill Hitler. People and events follow the record closely."}, {"title": "Irena's Vow", "year": 2023, "tier": 0, "note": "Irena Gut Opdyke hides Jews in a German officer's villa. Adapted from her memoir."}, {"title": "Glory", "year": 1989, "tier": 0, "note": "The 54th Massachusetts, one of the first Black regiments. Some recruits are composites."}, {"title": "Charlie Wilson's War", "year": 2007, "tier": 0, "note": "US funding of Afghan fighters in the 1980s. Events are compressed and the aftermath is left out."}, {"title": "The Imitation Game", "year": 2014, "tier": 0, "note": "Real Bletchley Park codebreaking, but Turing's role and several relationships are reworked."}, {"title": "The Forgotten Battle", "year": 2020, "tier": 1, "note": "The 1944 Battle of the Scheldt. The three leads are fictional."}, {"title": "Saving Private Ryan", "year": 1998, "tier": 1, "note": "The D-Day landing is recreated very accurately. The rescue mission never happened."}, {"title": "Fury", "year": 2014, "tier": 1, "note": "Germany, 1945. Tanks and tactics are faithful, the crew and story are invented."}, {"title": "Greyhound", "year": 2020, "tier": 1, "note": "An Atlantic convoy escort hunted by U-boats. From a novel, with accurate tactics."}, {"title": "1917", "year": 2019, "tier": 1, "note": "The German withdrawal of 1917. The two-soldier mission is fictional, loosely from a family story."}, {"title": "War Machine", "year": 2017, "tier": 2, "note": "A satire of the US command in Afghanistan. Names changed, events fictionalized."}, {"title": "Legends of the Fall", "year": 1994, "tier": 2, "note": "A family saga that touches the First World War. No real event drives the plot."}, {"title": "Allied", "year": 2016, "tier": 2, "note": "A fictional spy romance set in 1942 Casablanca."}, {"title": "Forrest Gump", "year": 1994, "tier": 2, "note": "A fictional man placed beside Vietnam and other real events."}, {"title": "Inglourious Basterds", "year": 2009, "tier": 3, "note": "Deliberately rewrites the Second World War. Hitler does not die this way."}, {"title": "Overlord", "year": 2018, "tier": 4, "note": "Set on the eve of D-Day, but the plot is a zombie experiment."}, {"title": "Ghosts of War", "year": 2020, "tier": 4, "note": "A haunted-house story with soldiers. No real events."}, {"title": "The Lair", "year": 2022, "tier": 4, "note": "Afghanistan setting with an invented creature."}, {"title": "Trench 11", "year": null, "tier": 4, "note": "A fictional bunker experiment in a First World War trench."}, {"title": "Edge of Tomorrow", "year": 2014, "tier": 4, "note": "Alien invasion and a time loop. A Normandy-style beach is the only echo."}, {"title": "The Tomorrow War", "year": 2021, "tier": 4, "note": "Soldiers sent forward in time to fight aliens."}], "rankWord": "File", "unit": "films"};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+$('eyebrow').textContent = L.eyebrow;
+$('h1').textContent = L.heading;
+$('lead').textContent = L.lead;
+$('foot').textContent = L.footer;
+const films = L.films.map((f, i) => ({...f, rank: i + 1}));
+$('stats').innerHTML = `<li><b>${films.length}</b> ${esc(L.unit)}</li><li><b>${L.tiers.length}</b> grades</li><li>${esc(L.meterName)}</li>`;
+let tier = 'all', q = '';
+function chip(label, val, title){
+  const b = document.createElement('button');
+  b.className = 'chip'; b.type = 'button'; b.textContent = label; b.dataset.v = val;
+  if (title) b.title = title;
+  b.setAttribute('aria-pressed', String(val === tier));
+  b.onclick = () => { tier = val; [...$('chips').children].forEach(c => c.setAttribute('aria-pressed', String(c.dataset.v === String(tier)))); render(); };
+  $('chips').append(b);
+}
+chip('All', 'all');
+L.tiers.forEach((t, i) => chip(`${t.grade} · ${t.short}`, i, t.name));
+function render(){
+  const out = [];
+  L.tiers.forEach((t, ti) => {
+    if (tier !== 'all' && tier !== ti) return;
+    const rows = films.filter(f => f.tier === ti && f.title.toLowerCase().includes(q));
+    if (!rows.length) return;
+    const segs = Array.from({length: L.slots}, (_, k) => `<i class="${k < t.fill ? 'on' : ''}"></i>`).join('');
+    out.push(`<section class="tier t${ti}" aria-labelledby="t${ti}"><h2 id="t${ti}"><span class="g">${esc(t.grade)}</span><span class="tn">${esc(t.name)}</span><small>${esc(t.blurb)}</small></h2><ol>` +
+      rows.map(f => `<li class="film"><div class="tab" aria-label="${esc(L.rankWord)} ${f.rank}"><span>${esc(L.rankWord)}</span><b>${String(f.rank).padStart(2,'0')}</b></div>
+        <div class="main"><h3 class="name">${esc(f.title)}${f.year ? `<span>${f.year}</span>` : ''}</h3><p class="note">${esc(f.note)}</p></div>
+        <div class="stamp" role="img" aria-label="${esc(L.meterName)}: grade ${esc(t.grade)}, ${esc(t.name)}"><b>${esc(t.grade)}</b><span>${esc(t.short)}</span><span class="segs">${segs}</span></div></li>`).join('') +
+      `</ol></section>`);
+  });
+  $('list').innerHTML = out.join('') || `<p class="empty">Nothing matches. Clear the search or pick another grade.</p>`;
+}
+$('q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); render(); });
+render();
+</script>
+</body>
+</html>
